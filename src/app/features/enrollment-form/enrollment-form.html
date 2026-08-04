@@ -1,0 +1,51 @@
+<h2>Course Enrollment</h2>
+
+@if (submitted()) {
+  <p>Enrollment submitted. Check the console for the payload.</p>
+} @else {
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div>
+      <label for="studentId">Student ID</label><br />
+      <input id="studentId" formControlName="studentId" />
+      @if (form.controls.studentId.touched && form.controls.studentId.invalid) {
+        <p class="error">Enter a valid Student ID (format: STU-0000)</p>
+      }
+    </div>
+
+    <div>
+      <label for="courseId">Course ID</label><br />
+      <input id="courseId" formControlName="courseId" />
+      @if (form.controls.courseId.touched && form.controls.courseId.invalid) {
+        <p class="error">Course ID is required</p>
+      }
+    </div>
+
+    <div>
+      <label for="term">Term</label><br />
+      <select id="term" formControlName="term">
+        <option value="Fall 2026">Fall 2026</option>
+        <option value="Spring 2027">Spring 2027</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="notes">Notes (optional)</label><br />
+      <textarea id="notes" formControlName="notes"></textarea>
+    </div>
+
+    <h3>Backup Courses</h3>
+
+    @for (backup of backups.controls; track $index) {
+      <div class="backup-row">
+        <input [formControl]="backups.at($index)" placeholder="Backup course" />
+        <button type="button" (click)="removeBackup($index)">Remove</button>
+      </div>
+    }
+
+    <button type="button" (click)="addBackup()">Add Backup Course</button>
+
+    <hr />
+
+    <button type="submit">Confirm Enrollment</button>
+  </form>
+}
