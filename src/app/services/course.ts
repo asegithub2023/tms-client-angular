@@ -8,7 +8,7 @@ import { Course, PagedResponse } from "../models/course.model";
 })
 export class CourseService {
   private http = inject(HttpClient);
-  private baseUrl = "https://localhost:5001/api/courses";
+  private baseUrl = "http://localhost:5196/api/courses";
 
   getAll() {
     return this.http

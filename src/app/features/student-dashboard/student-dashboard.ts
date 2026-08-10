@@ -4,16 +4,19 @@ import { RouterLink } from "@angular/router";
 import { CourseCardComponent } from "../../ui/course-card/course-card";
 import { Course } from "../../models/course.model";
 import { CourseService } from "../../services/course";
+import { EnrollmentListComponent } from "../enrollment-list/enrollment-list";
+import { EnrollmentStore } from "../../store/enrollment.store";
 
 @Component({
   selector: "app-student-dashboard",
   standalone: true,
-  imports: [CourseCardComponent, RouterLink],
+  imports: [CourseCardComponent, RouterLink, EnrollmentListComponent],
   templateUrl: "./student-dashboard.html",
   styleUrls: ["./student-dashboard.scss"],
 })
 export class StudentDashboardComponent {
   private api = inject(CourseService);
+  store = inject(EnrollmentStore);
 
   studentName = signal("Liya Kebede");
   earnedCredits = signal(45);

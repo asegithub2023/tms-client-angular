@@ -1,0 +1,14 @@
+<div>
+  <h1>Instructor Command Center</h1>
+  <p>Pending: {{ store.pendingCount() }}</p>
+
+  @defer (on viewport; prefetch on idle) {
+  <tms-analytics-chart></tms-analytics-chart>
+  } @placeholder {
+  <div>Scroll down to view analytics...</div>
+  } @loading (minimum 500ms) {
+  <div>Downloading chart engine...</div>
+  } @error {
+  <div>Failed to load chart. Check your connection.</div>
+  }
+</div>

@@ -10,6 +10,16 @@
   Register for a Class (+3 credits)
 </button>
 
+<section class="dashboard-summary">
+  <h2>Enrollment Summary</h2>
+  <p>Pending enrollments: {{ store.pendingCount() }}</p>
+</section>
+
+<section class="enrollment-panel">
+  <h2>Enrollment List</h2>
+  <tms-enrollment-list></tms-enrollment-list>
+</section>
+
 <h2>Course Catalog</h2>
 
 @if (coursesResource.isLoading()) {
