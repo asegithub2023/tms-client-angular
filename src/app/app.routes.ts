@@ -23,9 +23,18 @@ export const routes: Routes = [
       ),
   },
 
+
+  {
+    path: 'grade-submission',
+    loadComponent: () =>
+      import('./features/grade-submission/grade-submission.component').then(
+        (m) => m.GradeSubmissionComponent
+      ),
+  },
+
   {
     path: 'instructor-dashboard',
-    component: InstructorDashboardComponent
+    component: InstructorDashboardComponent,
   },
   {
     path: "courses/:id",
