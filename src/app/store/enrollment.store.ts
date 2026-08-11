@@ -24,6 +24,7 @@ import {
 } from 'rxjs';
 
 import { EnrollmentService } from '../services/enrollment';
+import { LiveSyncService } from '../services/live-sync.service';
 import { Enrollment } from '../models/enrollment.model';
 
 export const EnrollmentStore = signalStore(
@@ -38,14 +39,11 @@ export const EnrollmentStore = signalStore(
 
   withComputed((store) => ({
     pendingCount: computed(
-      () =>
-        store
-          .entities()
-          .filter((e) => e.status === 'Pending').length
+      () => store.entities().filter((e) => e.status === 'Pending').length
     ),
   })),
 
-  withMethods((store, api = inject(EnrollmentService)) => ({
+  withMethods((store, api = inject(EnrollmentService), sync = inject(LiveSyncService)) => ({
     loadEnrollments: rxMethod<void>(
       pipe(
         tap(() =>
@@ -54,23 +52,18 @@ export const EnrollmentStore = signalStore(
             error: null,
           })
         ),
-
         concatMap(() =>
           api.getAll().pipe(
             tap((rows) =>
-              patchState(
-                store,
-                setAllEntities(rows),
-                { isLoading: false }
-              )
+              patchState(store, setAllEntities(rows), {
+                isLoading: false,
+              })
             ),
-
             catchError((err) => {
               patchState(store, {
                 isLoading: false,
                 error: err.message,
               });
-
               return EMPTY;
             })
           )
@@ -91,7 +84,6 @@ export const EnrollmentStore = signalStore(
             })
           );
         }),
-
         concatMap((id) =>
           api.approve(id).pipe(
             catchError(() => {
@@ -104,16 +96,31 @@ export const EnrollmentStore = signalStore(
                   },
                 })
               );
-
               patchState(store, {
-                error:
-                  'Server rejected the approval. Check enrollment constraints.',
+                error: 'Server rejected the approval. Check enrollment constraints.',
               });
-
               return EMPTY;
             })
           )
         )
+      )
+    ),
+
+    listenForLiveUpdates: rxMethod<void>(
+      pipe(
+        tap(() => sync.connect()),
+        concatMap(() => sync.events$),
+        tap((event) => {
+          patchState(
+            store,
+            updateEntity({
+              id: event.id,
+              changes: {
+                status: event.status,
+              },
+            })
+          );
+        })
       )
     ),
   }))
