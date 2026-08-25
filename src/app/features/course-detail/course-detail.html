@@ -2,4 +2,10 @@
 
 <p>Course ID: {{ id() }}</p>
 
+@if (auth.hasRole('Admin')) {
+  <button type="button" (click)="deleteCourse()" class="btn-danger">
+    Delete Course
+  </button>
+}
+
 <a routerLink="/dashboard">Back to Dashboard</a>

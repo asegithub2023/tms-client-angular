@@ -1,0 +1,7 @@
+<h1>All Courses (Admin)</h1>
+
+@for (course of store.entities(); track course.id) {
+  <tms-course-card [course]="course" />
+} @empty {
+  <p>No courses found.</p>
+}

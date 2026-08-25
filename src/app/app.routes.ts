@@ -1,6 +1,8 @@
 import { Routes } from "@angular/router";
 import { InstructorDashboardComponent } from "./features/instructor-dashboard/instructor-dashboard";
 import { EnrollmentListComponent } from "./features/enrollment-list/enrollment-list";
+import { AdminCourseListComponent } from "./features/admin-course-list/admin-course-list.component";
+import { roleGuard } from "./guards/role.guard";
 
 export const routes: Routes = [
   {
@@ -43,5 +45,13 @@ export const routes: Routes = [
         (m) => m.CourseDetailComponent
       ),
   },
+
+{
+  path: 'admin/courses',
+  component: AdminCourseListComponent,
+  canActivate: [roleGuard('Admin')]
+},
+
+
   { path: "", redirectTo: "dashboard", pathMatch: "full" },
 ];
