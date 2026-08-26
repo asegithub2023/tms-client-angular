@@ -16,8 +16,8 @@
   <button
     type="button"
     (click)="enrollClicked.emit(course())"
-    [disabled]="course().enrollmentCount >= course().maxCapacity"
+    [disabled]="course().enrollmentCount >= course().maxCapacity || busy()"
   >
-    Enroll
+    {{ busy() ? 'Enrolling...' : 'Enroll' }}
   </button>
 </div>

@@ -25,6 +25,7 @@ import { GradePayload, GradeService } from '../../services/grade.service';
     MatProgressSpinnerModule,
   ],
   templateUrl: './grade-submission.component.html',
+  styleUrl: './grade-submission.component.scss',
 })
 export class GradeSubmissionComponent {
   private api = inject(GradeService);

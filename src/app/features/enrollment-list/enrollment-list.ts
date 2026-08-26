@@ -12,6 +12,7 @@ import { ChangeDetectionStrategy } from '@angular/core';
   standalone: true,
   imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule],
   templateUrl: './enrollment-list.html',
+  styleUrl: './enrollment-list.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EnrollmentListComponent {
@@ -35,5 +36,13 @@ export class EnrollmentListComponent {
     });
 
     this.store.loadEnrollments();
+  }
+
+  approve(id: number): void {
+    this.store.approveEnrollment(id);
+  }
+
+  reject(id: number): void {
+    this.store.rejectEnrollment(id);
   }
 }

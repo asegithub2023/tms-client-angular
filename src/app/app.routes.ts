@@ -6,6 +6,17 @@ import { roleGuard } from "./guards/role.guard";
 
 export const routes: Routes = [
   {
+    path: "login",
+    loadComponent: () =>
+      import("./features/login/login.component").then((m) => m.LoginComponent),
+  },
+  {
+    path: "register",
+    loadComponent: () =>
+      import("./features/register/register.component").then((m) => m.RegisterComponent),
+  },
+
+  {
     path: "dashboard",
     loadComponent: () =>
       import("./features/student-dashboard/student-dashboard").then(

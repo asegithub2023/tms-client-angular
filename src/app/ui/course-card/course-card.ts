@@ -11,5 +11,6 @@ import { Course } from "../../models/course.model";
 })
 export class CourseCardComponent {
   course = input.required<Course>();
+  busy = input(false);
   enrollClicked = output<Course>();
 }

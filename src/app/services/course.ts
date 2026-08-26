@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
 export class CourseService {
   private http = inject(HttpClient);
   private readonly base = `${environment.apiUrl}/courses`;
+  private readonly adminBase = '/api/courses';
 
   getAll() {
     return this.http
@@ -19,6 +20,6 @@ export class CourseService {
   }
 
   delete(id: number) {
-    return this.http.delete<void>(`${this.base}/${id}`);
+    return this.http.delete<void>(`${this.adminBase}/${id}`);
   }
 }

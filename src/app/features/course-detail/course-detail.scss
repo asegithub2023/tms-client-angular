@@ -1,0 +1,47 @@
+:host {
+  display: block;
+  max-width: 640px;
+}
+
+h1 {
+  margin-bottom: 0.5rem;
+}
+
+p {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.btn-danger {
+  background: #c62828;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 1rem 0;
+}
+
+.btn-danger:hover {
+  background: #b71c1c;
+}
+
+.btn-danger:disabled {
+  background: var(--mat-sys-surface-container-high);
+  color: var(--mat-sys-on-surface-variant);
+  cursor: not-allowed;
+}
+
+.delete-success {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.delete-error {
+  color: #c62828;
+  font-weight: 600;
+}
+
+a {
+  display: inline-block;
+  margin-top: 1rem;
+}

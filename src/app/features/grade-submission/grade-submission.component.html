@@ -44,13 +44,13 @@
           </mat-error>
         </mat-form-field>
 
-        <div *ngIf="isSubmitting" class="flex justify-center py-3">
-          <mat-spinner diameter="32"></mat-spinner>
-        </div>
+        <div *ngIf="isSubmitting" class="spinner-container">
+  <mat-spinner diameter="32"></mat-spinner>
+</div>
 
-        <div *ngIf="submissionStatus" class="mt-4 p-3 rounded-lg bg-slate-800 text-sky-400 text-sm font-medium border border-slate-700">
-          {{ submissionStatus }}
-        </div>
+<div *ngIf="submissionStatus" class="status-message">
+  {{ submissionStatus }}
+</div>
       </mat-card-content>
 
       <mat-card-actions class="mt-4">

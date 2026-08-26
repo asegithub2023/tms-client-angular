@@ -3,9 +3,22 @@
 <p>Course ID: {{ id() }}</p>
 
 @if (auth.hasRole('Admin')) {
-  <button type="button" (click)="deleteCourse()" class="btn-danger">
-    Delete Course
+  <button
+    type="button"
+    (click)="deleteCourse()"
+    class="btn-danger"
+    [disabled]="store.deleteStatus() === 'deleting'"
+  >
+    {{ store.deleteStatus() === 'deleting' ? 'Deleting...' : 'Delete Course' }}
   </button>
+}
+
+@if (store.deleteStatus() === 'success') {
+  <p class="delete-success">Course deleted successfully. Redirecting...</p>
+}
+
+@if (store.deleteStatus() === 'error' && store.error()) {
+  <p class="delete-error">{{ store.error() }}</p>
 }
 
 <a routerLink="/dashboard">Back to Dashboard</a>

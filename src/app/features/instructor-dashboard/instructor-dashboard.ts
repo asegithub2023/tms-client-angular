@@ -8,6 +8,7 @@ import { EnrollmentStore } from '../../store/enrollment.store';
   standalone: true,
   imports: [CommonModule, AnalyticsChartComponent],
   templateUrl: './instructor-dashboard.html',
+  styleUrl: './instructor-dashboard.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InstructorDashboardComponent {

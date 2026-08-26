@@ -1,7 +1,11 @@
-<h1>All Courses (Admin)</h1>
+<div class="admin-course-list">
+  <h1>All Courses (Admin)</h1>
 
-@for (course of store.entities(); track course.id) {
-  <tms-course-card [course]="course" />
-} @empty {
-  <p>No courses found.</p>
-}
+  <div class="admin-course-list__grid">
+    @for (course of store.entities(); track course.id) {
+      <tms-course-card [course]="course" />
+    } @empty {
+      <p class="admin-course-list__empty">No courses found.</p>
+    }
+  </div>
+</div>

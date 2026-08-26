@@ -71,7 +71,7 @@ export const EnrollmentStore = signalStore(
       )
     ),
 
-    approveEnrollment: rxMethod<string>(
+    approveEnrollment: rxMethod<number>(
       pipe(
         tap((id) => {
           patchState(
@@ -98,6 +98,41 @@ export const EnrollmentStore = signalStore(
               );
               patchState(store, {
                 error: 'Server rejected the approval. Check enrollment constraints.',
+              });
+              return EMPTY;
+            })
+          )
+        )
+      )
+    ),
+
+    rejectEnrollment: rxMethod<number>(
+      pipe(
+        tap((id) => {
+          patchState(
+            store,
+            updateEntity({
+              id,
+              changes: {
+                status: 'Rejected',
+              },
+            })
+          );
+        }),
+        concatMap((id) =>
+          api.reject(id).pipe(
+            catchError(() => {
+              patchState(
+                store,
+                updateEntity({
+                  id,
+                  changes: {
+                    status: 'Pending',
+                  },
+                })
+              );
+              patchState(store, {
+                error: 'Server rejected the rejection request.',
               });
               return EMPTY;
             })

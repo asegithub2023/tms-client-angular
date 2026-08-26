@@ -22,6 +22,10 @@
 
 <h2>Course Catalog</h2>
 
+@if (enrollMessage()) {
+  <p class="enroll-message">{{ enrollMessage() }}</p>
+}
+
 @if (coursesResource.isLoading()) {
 <p>Fetching courses from the server...</p>
 } @else if (coursesResource.error()) {
@@ -29,7 +33,11 @@
 } @else {
 <div class="course-grid">
   @for (course of (coursesResource.value() ?? []); track course.id) {
-  <tms-course-card [course]="course" (enrollClicked)="handleEnroll($event)"></tms-course-card>
+  <tms-course-card
+    [course]="course"
+    [busy]="enrollingCourseId() === course.id"
+    (enrollClicked)="handleEnroll($event)"
+  ></tms-course-card>
   } @empty {
   <p>No courses are available this term.</p>
   }

@@ -7,6 +7,7 @@ import { CourseCardComponent } from '../../ui/course-card/course-card';
   standalone: true,
   imports: [CourseCardComponent],
   templateUrl: './admin-course-list.component.html',
+  styleUrl: './admin-course-list.component.scss',
 })
 export class AdminCourseListComponent implements OnInit {
   store = inject(CourseStore);

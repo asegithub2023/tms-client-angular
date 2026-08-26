@@ -4,7 +4,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Subject } from 'rxjs';
 
 export interface EnrollmentStatusEvent {
-  id: string;
+  id: number;
   status: 'Pending' | 'Approved' | 'Rejected';
 }
 
@@ -32,7 +32,7 @@ export class LiveSyncService {
       .build();
 
     this.connection.on('ReceiveEnrollmentStatusUpdated', (enrollmentId: string, status: 'Pending' | 'Approved' | 'Rejected') => {
-      this.eventsSubject.next({ id: enrollmentId, status });
+      this.eventsSubject.next({ id: Number(enrollmentId), status });
     });
 
     this.connection.onreconnecting(() => this.connectionState.set('reconnecting'));

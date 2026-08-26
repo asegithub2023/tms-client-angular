@@ -1,1 +1,31 @@
-<router-outlet></router-outlet>
+<header class="app-header">
+  <div class="app-header__brand">
+    <a routerLink="/dashboard">TMS</a>
+  </div>
+
+  <nav class="app-header__nav">
+    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+    <a routerLink="/enroll" routerLinkActive="active">Enroll</a>
+    <a routerLink="/instructor-dashboard" routerLinkActive="active">Instructor</a>
+    @if (auth.hasRole('Admin')) {
+      <a routerLink="/admin/courses" routerLinkActive="active">Admin Courses</a>
+    }
+    <a routerLink="/grade-submission" routerLinkActive="active">Grades</a>
+  </nav>
+
+  <div class="app-header__account">
+    @if (auth.isLoggedIn()) {
+      <span class="app-header__user">
+        {{ auth.currentUser()?.displayName }} ({{ auth.currentUser()?.role }})
+      </span>
+      <button type="button" (click)="logout()">Log Out</button>
+    } @else {
+      <a routerLink="/login">Sign In</a>
+      <a routerLink="/register">Register</a>
+    }
+  </div>
+</header>
+
+<main class="app-main">
+  <router-outlet></router-outlet>
+</main>

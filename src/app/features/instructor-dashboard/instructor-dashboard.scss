@@ -1,0 +1,20 @@
+.instructor-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.instructor-dashboard__placeholder {
+  padding: 2rem;
+  text-align: center;
+  color: var(--mat-sys-on-surface-variant);
+  border: 1px dashed var(--mat-sys-outline-variant);
+  border-radius: 8px;
+}
+
+.instructor-dashboard__error {
+  padding: 1rem;
+  color: #c62828;
+  border: 1px solid #c62828;
+  border-radius: 8px;
+}

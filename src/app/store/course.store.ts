@@ -28,6 +28,7 @@ export const CourseStore = signalStore(
   withState({
     isLoading: false,
     error: null as string | null,
+    deleteStatus: 'idle' as 'idle' | 'deleting' | 'success' | 'error',
   }),
 
   withEntities<Course>(),
@@ -63,20 +64,28 @@ export const CourseStore = signalStore(
     deleteCourse(id: number) {
       const previousSnapshot = store.entities();
 
-      patchState(store, removeEntity(id));
+      patchState(store, removeEntity(id), {
+        deleteStatus: 'deleting',
+        error: null,
+      });
 
       api
         .delete(id)
         .pipe(
-          catchError(() => {
+          catchError((err) => {
             patchState(store, setAllEntities(previousSnapshot));
             patchState(store, {
-              error: 'Cannot delete course: active student enrollments exist.',
+              error:
+                err?.error?.detail ??
+                'Cannot delete course: active student enrollments exist.',
+              deleteStatus: 'error',
             });
             return EMPTY;
           })
         )
-        .subscribe();
+        .subscribe(() => {
+          patchState(store, { deleteStatus: 'success' });
+        });
     },
   }))
 );

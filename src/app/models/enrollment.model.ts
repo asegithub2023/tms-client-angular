@@ -1,5 +1,5 @@
 export interface Enrollment {
-  id: string;
+  id: number;
   studentId: number;
   studentName: string;
   courseId: number;
