@@ -7,6 +7,7 @@ import { CourseService } from "../../services/course";
 import { EnrollmentService } from "../../services/enrollment";
 import { EnrollmentListComponent } from "../enrollment-list/enrollment-list";
 import { EnrollmentStore } from "../../store/enrollment.store";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: "app-student-dashboard",
@@ -18,15 +19,13 @@ import { EnrollmentStore } from "../../store/enrollment.store";
 export class StudentDashboardComponent {
   private api = inject(CourseService);
   private enrollmentApi = inject(EnrollmentService);
+  private auth = inject(AuthService);
   store = inject(EnrollmentStore);
 
-  studentName = signal("Liya Kebede");
-  earnedCredits = signal(45);
+  studentName = computed(() => this.auth.currentUser()?.displayName ?? "Student");
+  private studentId = computed(() => this.auth.currentUser()?.studentId ?? null);
 
-  // NOTE: there is no link yet between a logged-in account and a Student
-  // record, so this demo dashboard enrolls against a fixed seeded student
-  // (id 1 = "AliceSmith" from the startup seed data).
-  private demoStudentId = 1;
+  earnedCredits = signal(45);
 
   graduationStatus = computed(() =>
     this.earnedCredits() >= 120 ? "Eligible for Graduation" : "In Progress"
@@ -45,12 +44,21 @@ export class StudentDashboardComponent {
   }
 
   handleEnroll(course: Course) {
+    const studentId = this.studentId();
+
+    if (studentId === null) {
+      this.enrollMessage.set(
+        "Your account isn't linked to a student record. Log in with a Student account to enroll."
+      );
+      return;
+    }
+
     this.selectedCourse.set(course);
     this.enrollingCourseId.set(course.id);
     this.enrollMessage.set(null);
 
     this.enrollmentApi
-      .create({ studentId: this.demoStudentId, courseCode: course.code })
+      .create({ studentId, courseCode: course.code })
       .subscribe({
         next: () => {
           this.enrollingCourseId.set(null);

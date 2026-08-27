@@ -6,6 +6,7 @@ export interface TmsUser {
   email: string;
   displayName: string;
   role: string;
+  studentId?: number;
 }
 
 export interface LoginRequest {
@@ -79,13 +80,16 @@ export class AuthService {
   private setUserFromToken(token: string): void {
     // Decode user payload from JWT (or fetch /api/auth/me)
     const payload = JSON.parse(atob(token.split('.')[1]));
+    const studentIdClaim = payload['studentId'];
+
     this.currentUser.set({
       email: payload.email || payload.sub,
       displayName: payload.name || payload.email || 'User',
       role:
         payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
         || payload.role
-        || 'Student'
+        || 'Student',
+      studentId: studentIdClaim ? Number(studentIdClaim) : undefined,
     });
   }
 }
