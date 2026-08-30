@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
 export interface TmsUser {
+  userId: string;
   email: string;
   displayName: string;
   role: string;
@@ -50,9 +51,17 @@ export class AuthService {
     return this.accessToken();
   }
 
+  // Used by route guards: Admin can access anything a lower role can.
   hasRole(role: string): boolean {
     const user = this.currentUser();
     return user?.role === role || user?.role === 'Admin';
+  }
+
+  // Used for nav/display decisions where Admin should NOT automatically
+  // match (e.g. the "Enroll" link is Student-only, even though an Admin
+  // can technically pass a `hasRole('Student')` guard check).
+  isExactRole(role: string): boolean {
+    return this.currentUser()?.role === role;
   }
 
   async login(credentials: LoginRequest): Promise<void> {
@@ -83,6 +92,10 @@ export class AuthService {
     const studentIdClaim = payload['studentId'];
 
     this.currentUser.set({
+      userId:
+        payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
+        || payload.sub
+        || '',
       email: payload.email || payload.sub,
       displayName: payload.name || payload.email || 'User',
       role:

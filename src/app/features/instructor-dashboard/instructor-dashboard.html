@@ -2,6 +2,8 @@
   <h1>Instructor Command Center</h1>
   <p>Pending: {{ store.pendingCount() }}</p>
 
+  <a routerLink="/enrollments">Manage Enrollments</a>
+
   @defer (on viewport; prefetch on idle) {
   <tms-analytics-chart></tms-analytics-chart>
   } @placeholder {

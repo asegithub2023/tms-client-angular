@@ -1,0 +1,28 @@
+<div class="transcript-request">
+  <button type="button" (click)="request()" [disabled]="isRequesting()">
+    {{ isRequesting() ? 'Requesting...' : 'Request Transcript' }}
+  </button>
+
+  @if (status(); as s) {
+    <p class="transcript-status">
+      Status: <strong>{{ stateLabel(s.state) }}</strong> (Report {{ s.reportId }})
+    </p>
+
+    @if (s.state === READY) {
+      <p class="hint">
+        Report generated ({{ s.downloadUrl }}) - note: the file-download endpoint
+        itself isn't implemented on the backend yet, so this isn't a clickable
+        link. The request/queue/status pipeline is fully working; only serving
+        the actual file is still a stub.
+      </p>
+    }
+
+    @if (s.state === FAILED && s.errorMessage) {
+      <p class="error">{{ s.errorMessage }}</p>
+    }
+  }
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+</div>

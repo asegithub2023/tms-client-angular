@@ -28,13 +28,24 @@
   font-weight: 600;
 }
 
+.course-card__owned {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--mat-sys-primary);
+}
+
 .course-card.closed {
   opacity: 0.6;
   border-color: #c62828;
 }
 
+.course-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .course-card button {
-  align-self: flex-start;
   padding: 0.4rem 0.9rem;
   border: none;
   border-radius: 6px;
@@ -47,4 +58,10 @@
   background: var(--mat-sys-surface-container-high);
   color: var(--mat-sys-on-surface-variant);
   cursor: not-allowed;
+}
+
+.course-card__edit-link {
+  font-size: 0.85rem;
+  color: var(--mat-sys-primary);
+  text-decoration: none;
 }

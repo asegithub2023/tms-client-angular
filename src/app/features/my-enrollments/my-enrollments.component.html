@@ -1,0 +1,37 @@
+<div class="my-enrollments">
+  @if (isLoading()) {
+    <p>Loading your enrollments...</p>
+  } @else if (error()) {
+    <p class="my-enrollments__error">{{ error() }}</p>
+  } @else if (enrollments().length === 0) {
+    <p>You have no enrollments yet.</p>
+  } @else {
+    <table class="my-enrollments__table">
+      <thead>
+        <tr>
+          <th>Course</th>
+          <th>Status</th>
+          <th>Enrolled</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of enrollments(); track row.id) {
+          <tr>
+            <td>{{ row.courseName }}</td>
+            <td>
+              <span
+                class="status-badge"
+                [class.pending]="row.status === 'Pending'"
+                [class.approved]="row.status === 'Approved'"
+                [class.rejected]="row.status === 'Rejected'"
+              >
+                {{ row.status }}
+              </span>
+            </td>
+            <td>{{ row.enrolledAt | date: 'mediumDate' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

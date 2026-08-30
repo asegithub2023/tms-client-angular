@@ -1,0 +1,64 @@
+<div class="course-form">
+  <h1>{{ isEditMode() ? 'Edit Course' : 'New Course' }}</h1>
+
+  @if (isLoading()) {
+    <p>Loading course...</p>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="field">
+        <label for="code">Course Code</label>
+        <input id="code" formControlName="code" placeholder="CSE-101" />
+        @if (form.controls.code.enabled && form.controls.code.touched && form.controls.code.invalid) {
+          <p class="error">Format must be XXX-000 (e.g., CSE-101).</p>
+        }
+        @if (isEditMode()) {
+          <p class="hint">Course code can't be changed after creation.</p>
+        }
+      </div>
+
+      <div class="field">
+        <label for="title">Title</label>
+        <input id="title" formControlName="title" />
+        @if (form.controls.title.touched && form.controls.title.invalid) {
+          <p class="error">Title is required.</p>
+        }
+      </div>
+
+      <div class="field">
+        <label for="maxCapacity">Max Capacity</label>
+        <input id="maxCapacity" type="number" formControlName="maxCapacity" />
+        @if (form.controls.maxCapacity.enabled && form.controls.maxCapacity.touched && form.controls.maxCapacity.invalid) {
+          <p class="error">Enter a capacity between 1 and 200.</p>
+        }
+        @if (isEditMode()) {
+          <p class="hint">Capacity can't be changed after creation.</p>
+        }
+      </div>
+
+      @if (isAdmin()) {
+        <div class="field">
+          <label for="instructorId">Assigned Instructor</label>
+          <select id="instructorId" formControlName="instructorId">
+            <option value="">Unassigned</option>
+            @for (instructor of instructors(); track instructor.id) {
+              <option [value]="instructor.id">{{ instructor.name }}</option>
+            }
+          </select>
+        </div>
+      } @else if (!isEditMode()) {
+        <p class="hint">This course will be assigned to you as the instructor.</p>
+      }
+
+      @if (errorMessage()) {
+        <p class="error server-error">{{ errorMessage() }}</p>
+      }
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="isSubmitting()">
+          {{ isSubmitting() ? 'Saving...' : (isEditMode() ? 'Save Changes' : 'Create Course') }}
+        </button>
+        <a routerLink="/admin/courses">Cancel</a>
+      </div>
+    </form>
+  }
+</div>

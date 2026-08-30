@@ -5,11 +5,19 @@
 }
 
 .dashboard-summary,
-.enrollment-panel {
+.enrollment-panel,
+.documents-panel {
   padding: 1rem;
   border: 1px solid var(--mat-sys-outline-variant);
   border-radius: 10px;
   background: var(--mat-sys-surface-container-low);
+}
+
+.documents-panel__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 0.5rem;
 }
 
 .course-grid {

@@ -1,0 +1,38 @@
+<div class="instructor-course-list">
+  <div class="instructor-course-list__header">
+    <h1>My Courses</h1>
+    <a routerLink="/admin/courses/new" class="instructor-course-list__new-btn">+ New Course</a>
+  </div>
+
+  @if (isLoading()) {
+    <p>Loading your courses...</p>
+  } @else if (errorMessage()) {
+    <p class="instructor-course-list__error">{{ errorMessage() }}</p>
+  } @else if (courses().length === 0) {
+    <p>You don't have any courses assigned yet.</p>
+  } @else {
+    <table class="instructor-course-list__table">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Title</th>
+          <th>Enrolled</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (course of courses(); track course.id) {
+          <tr>
+            <td>{{ course.code }}</td>
+            <td>{{ course.title }}</td>
+            <td>{{ course.enrollmentCount }} / {{ course.maxCapacity }}</td>
+            <td>
+              <a [routerLink]="['/admin/courses', course.id, 'edit']">Edit</a>
+              <a [routerLink]="['/courses', course.id]">View</a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

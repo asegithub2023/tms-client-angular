@@ -1,5 +1,8 @@
 <div class="admin-course-list">
-  <h1>All Courses (Admin)</h1>
+  <div class="admin-course-list__header">
+    <h1>All Courses (Admin)</h1>
+    <a routerLink="/admin/courses/new" class="admin-course-list__new-btn">+ New Course</a>
+  </div>
 
   <div class="admin-course-list__grid">
     @for (course of store.entities(); track course.id) {

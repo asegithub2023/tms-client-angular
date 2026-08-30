@@ -3,14 +3,17 @@
 <p>Course ID: {{ id() }}</p>
 
 @if (auth.hasRole('Admin')) {
-  <button
-    type="button"
-    (click)="deleteCourse()"
-    class="btn-danger"
-    [disabled]="store.deleteStatus() === 'deleting'"
-  >
-    {{ store.deleteStatus() === 'deleting' ? 'Deleting...' : 'Delete Course' }}
-  </button>
+  <div class="course-detail__actions">
+    <a [routerLink]="['/admin/courses', id(), 'edit']" class="btn-edit">Edit Course</a>
+    <button
+      type="button"
+      (click)="deleteCourse()"
+      class="btn-danger"
+      [disabled]="store.deleteStatus() === 'deleting'"
+    >
+      {{ store.deleteStatus() === 'deleting' ? 'Deleting...' : 'Delete Course' }}
+    </button>
+  </div>
 }
 
 @if (store.deleteStatus() === 'success') {

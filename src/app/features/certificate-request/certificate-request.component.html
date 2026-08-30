@@ -1,0 +1,28 @@
+<div class="certificate-request">
+  <label for="cert-course-code">Course Code</label>
+  <input
+    id="cert-course-code"
+    [value]="courseCode()"
+    (input)="updateCourseCode($any($event.target).value)"
+    placeholder="CSE-101"
+  />
+
+  <button type="button" (click)="request()" [disabled]="isRequesting()">
+    {{ isRequesting() ? 'Requesting...' : 'Request Certificate' }}
+  </button>
+
+  @if (isRequesting()) {
+    <p class="hint">
+      This can take up to 20 seconds - the certificate provider is intentionally
+      unreliable in this environment (used to demonstrate retry/circuit-breaker behavior).
+    </p>
+  }
+
+  @if (resultMessage()) {
+    <p class="success">{{ resultMessage() }}</p>
+  }
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+</div>

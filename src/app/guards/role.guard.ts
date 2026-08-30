@@ -7,6 +7,10 @@ export const roleGuard = (requiredRole: string): CanActivateFn => {
     const auth = inject(AuthService);
     const router = inject(Router);
 
+    if (!auth.isLoggedIn()) {
+      return router.createUrlTree(['/login']);
+    }
+
     if (auth.hasRole(requiredRole)) {
       return true;
     }

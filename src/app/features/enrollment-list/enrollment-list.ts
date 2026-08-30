@@ -36,6 +36,7 @@ export class EnrollmentListComponent {
     });
 
     this.store.loadEnrollments();
+    this.store.listenForLiveUpdates();
   }
 
   approve(id: number): void {

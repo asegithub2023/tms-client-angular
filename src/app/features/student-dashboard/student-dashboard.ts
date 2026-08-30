@@ -1,18 +1,25 @@
-import { Component, computed, inject, signal } from "@angular/core";
+import { Component, computed, inject, signal, viewChild } from "@angular/core";
 import { rxResource } from "@angular/core/rxjs-interop";
 import { RouterLink } from "@angular/router";
 import { CourseCardComponent } from "../../ui/course-card/course-card";
 import { Course } from "../../models/course.model";
 import { CourseService } from "../../services/course";
 import { EnrollmentService } from "../../services/enrollment";
-import { EnrollmentListComponent } from "../enrollment-list/enrollment-list";
-import { EnrollmentStore } from "../../store/enrollment.store";
 import { AuthService } from "../../services/auth.service";
+import { MyEnrollmentsComponent } from "../my-enrollments/my-enrollments.component";
+import { CertificateRequestComponent } from "../certificate-request/certificate-request.component";
+import { TranscriptRequestComponent } from "../transcript-request/transcript-request.component";
 
 @Component({
   selector: "app-student-dashboard",
   standalone: true,
-  imports: [CourseCardComponent, RouterLink, EnrollmentListComponent],
+  imports: [
+    CourseCardComponent,
+    RouterLink,
+    MyEnrollmentsComponent,
+    CertificateRequestComponent,
+    TranscriptRequestComponent,
+  ],
   templateUrl: "./student-dashboard.html",
   styleUrls: ["./student-dashboard.scss"],
 })
@@ -20,7 +27,8 @@ export class StudentDashboardComponent {
   private api = inject(CourseService);
   private enrollmentApi = inject(EnrollmentService);
   private auth = inject(AuthService);
-  store = inject(EnrollmentStore);
+
+  private myEnrollments = viewChild(MyEnrollmentsComponent);
 
   studentName = computed(() => this.auth.currentUser()?.displayName ?? "Student");
   private studentId = computed(() => this.auth.currentUser()?.studentId ?? null);
@@ -63,7 +71,7 @@ export class StudentDashboardComponent {
         next: () => {
           this.enrollingCourseId.set(null);
           this.enrollMessage.set(`Enrolled in ${course.title}.`);
-          this.store.loadEnrollments();
+          this.myEnrollments()?.reload();
         },
         error: (err) => {
           this.enrollingCourseId.set(null);

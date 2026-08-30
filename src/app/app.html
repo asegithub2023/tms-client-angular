@@ -3,15 +3,23 @@
     <a routerLink="/dashboard">TMS</a>
   </div>
 
-  <nav class="app-header__nav">
-    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-    <a routerLink="/enroll" routerLinkActive="active">Enroll</a>
-    <a routerLink="/instructor-dashboard" routerLinkActive="active">Instructor</a>
-    @if (auth.hasRole('Admin')) {
-      <a routerLink="/admin/courses" routerLinkActive="active">Admin Courses</a>
-    }
-    <a routerLink="/grade-submission" routerLinkActive="active">Grades</a>
-  </nav>
+  @if (auth.isLoggedIn()) {
+    <nav class="app-header__nav">
+      @if (auth.hasRole('Instructor')) {
+        <a routerLink="/instructor-dashboard" routerLinkActive="active">Dashboard</a>
+        <a routerLink="/instructor/courses" routerLinkActive="active">My Courses</a>
+        <a routerLink="/enrollments" routerLinkActive="active">Manage Enrollments</a>
+        <a routerLink="/grade-submission" routerLinkActive="active">Grades</a>
+      } @else {
+        <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        <a routerLink="/enroll" routerLinkActive="active">Enroll</a>
+      }
+
+      @if (auth.hasRole('Admin')) {
+        <a routerLink="/admin/courses" routerLinkActive="active">Admin Courses</a>
+      }
+    </nav>
+  }
 
   <div class="app-header__account">
     @if (auth.isLoggedIn()) {

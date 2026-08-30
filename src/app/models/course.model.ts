@@ -5,6 +5,7 @@ title: string;
 maxCapacity: number;
 enrollmentCount: number;
 status?: string;
+instructorId?: string;
 }
 
 export interface PagedResponse<T> {
@@ -25,4 +26,21 @@ export interface CourseLink {
 
 export interface CourseDetail extends Course {
   links: readonly CourseLink[];
+}
+
+export interface CreateCourseRequest {
+  code: string;
+  title: string;
+  maxCapacity: number;
+  instructorId?: string | null;
+}
+
+export interface UpdateCourseRequest {
+  title: string;
+  instructorId?: string | null;
+}
+
+export interface InstructorOption {
+  id: string;
+  name: string;
 }

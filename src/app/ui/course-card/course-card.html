@@ -13,11 +13,21 @@
     {{ course().enrollmentCount >= course().maxCapacity ? "Full" : "Accepting enrollments" }}
   </p>
 
-  <button
-    type="button"
-    (click)="enrollClicked.emit(course())"
-    [disabled]="course().enrollmentCount >= course().maxCapacity || busy()"
-  >
-    {{ busy() ? 'Enrolling...' : 'Enroll' }}
-  </button>
+  @if (auth.isExactRole('Instructor') && course().instructorId === auth.currentUser()?.userId) {
+    <p class="course-card__owned">Your course</p>
+  }
+
+  <div class="course-card__actions">
+    <button
+      type="button"
+      (click)="enrollClicked.emit(course())"
+      [disabled]="course().enrollmentCount >= course().maxCapacity || busy()"
+    >
+      {{ busy() ? 'Enrolling...' : 'Enroll' }}
+    </button>
+
+    @if (auth.hasRole('Admin')) {
+      <a [routerLink]="['/admin/courses', course().id, 'edit']" class="course-card__edit-link">Edit</a>
+    }
+  </div>
 </div>

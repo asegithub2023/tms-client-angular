@@ -1,0 +1,37 @@
+.my-enrollments__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.my-enrollments__table th,
+.my-enrollments__table td {
+  text-align: left;
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.status-badge {
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-badge.pending {
+  background: var(--mat-sys-tertiary-container);
+  color: var(--mat-sys-on-tertiary-container);
+}
+
+.status-badge.approved {
+  background: #c8e6c9;
+  color: #1b5e20;
+}
+
+.status-badge.rejected {
+  background: #ffcdd2;
+  color: #b71c1c;
+}
+
+.my-enrollments__error {
+  color: #c62828;
+}

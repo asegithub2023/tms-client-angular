@@ -1,7 +1,14 @@
 import { Injectable, inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
-import { Course, PagedResponse } from "../models/course.model";
+import {
+  Course,
+  CourseDetail,
+  CreateCourseRequest,
+  InstructorOption,
+  PagedResponse,
+  UpdateCourseRequest,
+} from "../models/course.model";
 import { environment } from '../../environments/environment';
 
 
@@ -17,6 +24,26 @@ export class CourseService {
         params: { page: '1', pageSize: '50' }
       })
       .pipe(map(response => response.items));
+  }
+
+  getById(id: number) {
+    return this.http.get<CourseDetail>(`${this.adminBase}/${id}`);
+  }
+
+  getInstructors() {
+    return this.http.get<InstructorOption[]>(`${this.adminBase}/instructors`);
+  }
+
+  getMine() {
+    return this.http.get<Course[]>(`${this.adminBase}/mine`);
+  }
+
+  create(request: CreateCourseRequest) {
+    return this.http.post<Course>(this.adminBase, request);
+  }
+
+  update(id: number, request: UpdateCourseRequest) {
+    return this.http.put<void>(`${this.adminBase}/${id}`, request);
   }
 
   delete(id: number) {

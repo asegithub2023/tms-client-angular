@@ -4,6 +4,22 @@
   gap: 1rem;
 }
 
+.admin-course-list__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.admin-course-list__new-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  background: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
 .admin-course-list__grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
