@@ -1,17 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { EMPTY } from 'rxjs';
 
-import { EnrollmentList } from './enrollment-list';
+import { EnrollmentListComponent } from './enrollment-list';
+import { LiveSyncService } from '../../services/live-sync.service';
 
-describe('EnrollmentList', () => {
-  let component: EnrollmentList;
-  let fixture: ComponentFixture<EnrollmentList>;
+describe('EnrollmentListComponent', () => {
+  let component: EnrollmentListComponent;
+  let fixture: ComponentFixture<EnrollmentListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EnrollmentList],
+      imports: [EnrollmentListComponent],
+      providers: [
+        provideHttpClient(),
+        { provide: LiveSyncService, useValue: { connect: () => {}, events$: EMPTY } },
+      ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(EnrollmentList);
+    fixture = TestBed.createComponent(EnrollmentListComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
