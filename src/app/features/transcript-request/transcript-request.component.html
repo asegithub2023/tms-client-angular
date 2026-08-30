@@ -9,12 +9,9 @@
     </p>
 
     @if (s.state === READY) {
-      <p class="hint">
-        Report generated ({{ s.downloadUrl }}) - note: the file-download endpoint
-        itself isn't implemented on the backend yet, so this isn't a clickable
-        link. The request/queue/status pipeline is fully working; only serving
-        the actual file is still a stub.
-      </p>
+      <button type="button" (click)="download(s.reportId)" [disabled]="isDownloading()">
+        {{ isDownloading() ? 'Downloading...' : 'Download Transcript' }}
+      </button>
     }
 
     @if (s.state === FAILED && s.errorMessage) {

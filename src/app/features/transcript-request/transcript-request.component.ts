@@ -28,6 +28,7 @@ export class TranscriptRequestComponent implements OnDestroy {
   status = signal<TranscriptStatus | null>(null);
   errorMessage = signal<string | null>(null);
   isRequesting = signal(false);
+  isDownloading = signal(false);
 
   private studentId = computed(() => this.auth.currentUser()?.studentId ?? null);
   private pollSub?: Subscription;
@@ -65,6 +66,30 @@ export class TranscriptRequestComponent implements OnDestroy {
       error: (err) => {
         this.isRequesting.set(false);
         this.errorMessage.set(err?.error?.detail ?? 'Could not request a transcript.');
+      },
+    });
+  }
+
+  // A plain <a href> would skip the jwtInterceptor (raw browser navigation
+  // never touches Angular's HttpClient), so the download goes through
+  // HttpClient and gets saved from the in-memory blob response instead.
+  download(reportId: string): void {
+    this.isDownloading.set(true);
+    this.errorMessage.set(null);
+
+    this.api.download(reportId).subscribe({
+      next: ({ blob, fileName }) => {
+        this.isDownloading.set(false);
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+        link.click();
+        URL.revokeObjectURL(url);
+      },
+      error: (err) => {
+        this.isDownloading.set(false);
+        this.errorMessage.set(err?.error?.detail ?? 'Could not download the transcript.');
       },
     });
   }
