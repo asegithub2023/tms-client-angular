@@ -46,4 +46,31 @@ export class EnrollmentListComponent {
   reject(id: number): void {
     this.store.rejectEnrollment(id);
   }
+
+  getStatusBadgeClass(status: string): string {
+    const baseClass = 'badge';
+    switch (status) {
+      case 'Pending':
+        return `${baseClass} badge-pending`;
+      case 'Approved':
+        return `${baseClass} badge-approved`;
+      case 'Rejected':
+        return `${baseClass} badge-rejected`;
+      default:
+        return baseClass;
+    }
+  }
+
+  getStatusIcon(status: string): string {
+    switch (status) {
+      case 'Pending':
+        return 'bi bi-hourglass-split';
+      case 'Approved':
+        return 'bi bi-check-circle-fill';
+      case 'Rejected':
+        return 'bi bi-x-circle-fill';
+      default:
+        return 'bi bi-question-circle';
+    }
+  }
 }

@@ -21,8 +21,7 @@ export class RegisterComponent {
   successMessage = signal<string | null>(null);
 
   form = this.fb.nonNullable.group({
-    firstName: ['', Validators.required],
-    lastName: ['', Validators.required],
+    fullName: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [
       Validators.required,
@@ -43,7 +42,19 @@ export class RegisterComponent {
     this.successMessage.set(null);
 
     try {
-      const result = await this.auth.register(this.form.getRawValue());
+      const formValue = this.form.getRawValue();
+      const [firstName, ...lastNameParts] = formValue.fullName.trim().split(' ');
+      const lastName = lastNameParts.join(' ') || firstName;
+
+      const registerData = {
+        firstName,
+        lastName,
+        email: formValue.email,
+        password: formValue.password,
+        role: formValue.role,
+      };
+
+      const result = await this.auth.register(registerData);
       this.successMessage.set(result.message ?? 'Registration successful.');
       setTimeout(() => this.router.navigateByUrl('/login'), 1500);
     } catch (err: any) {

@@ -1,16 +1,48 @@
 <div class="instructor-dashboard">
-  <h1>Instructor Command Center</h1>
-  <p>Pending: {{ store.pendingCount() }}</p>
+  <!-- Header -->
+  <div class="dashboard-header">
+    <div class="header-icon">
+      <i class="bi bi-graph-up"></i>
+    </div>
+    <div>
+      <h1 class="dashboard-title">Instructor Command Center</h1>
+      <p class="dashboard-subtitle">Manage your courses and track enrollments</p>
+    </div>
+  </div>
 
-  <a routerLink="/enrollments">Manage Enrollments</a>
+  <!-- Pending Enrollments & Quick Action -->
+  <div class="action-card">
+    <div class="stat-card">
+      <div class="stat-icon pending">
+        <i class="bi bi-hourglass-split"></i>
+      </div>
+      <div class="stat-content">
+        <p class="stat-label">Pending Enrollments</p>
+        <p class="stat-number">{{ store.pendingCount() }}</p>
+      </div>
+    </div>
+    <a routerLink="/enrollments" class="btn-action btn-action-card">
+      <i class="bi bi-person-check"></i>
+      <span class="btn-text">
+        <div class="btn-label">Manage Enrollments</div>
+        <div class="btn-sublabel">Review and approve</div>
+      </span>
+    </a>
+  </div>
 
-  @defer (on viewport; prefetch on idle) {
-  <tms-analytics-chart></tms-analytics-chart>
-  } @placeholder {
-  <div class="instructor-dashboard__placeholder">Scroll down to view analytics...</div>
-  } @loading (minimum 500ms) {
-  <div class="instructor-dashboard__placeholder">Downloading chart engine...</div>
-  } @error {
-  <div class="instructor-dashboard__error">Failed to load chart. Check your connection.</div>
-  }
+  <!-- Analytics Section -->
+  <div class="analytics-section">
+    <h3 class="section-title">
+      <i class="bi bi-bar-chart"></i> Analytics
+    </h3>
+    @defer (on viewport; prefetch on idle) {
+    <tms-analytics-chart></tms-analytics-chart>
+    } @placeholder {
+    <div class="instructor-dashboard__placeholder">Scroll down to view analytics...</div>
+    } @loading (minimum 500ms) {
+    <div class="instructor-dashboard__placeholder">Downloading chart engine...</div>
+    } @error {
+    <div class="instructor-dashboard__error">Failed to load chart. Check your connection.</div>
+    }
+  </div>
 </div>

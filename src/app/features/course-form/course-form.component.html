@@ -1,64 +1,144 @@
-<div class="course-form">
-  <h1>{{ isEditMode() ? 'Edit Course' : 'New Course' }}</h1>
-
-  @if (isLoading()) {
-    <p>Loading course...</p>
-  } @else {
-    <form [formGroup]="form" (ngSubmit)="submit()">
-      <div class="field">
-        <label for="code">Course Code</label>
-        <input id="code" formControlName="code" placeholder="CSE-101" />
-        @if (form.controls.code.enabled && form.controls.code.touched && form.controls.code.invalid) {
-          <p class="error">Format must be XXX-000 (e.g., CSE-101).</p>
-        }
-        @if (isEditMode()) {
-          <p class="hint">Course code can't be changed after creation.</p>
-        }
-      </div>
-
-      <div class="field">
-        <label for="title">Title</label>
-        <input id="title" formControlName="title" />
-        @if (form.controls.title.touched && form.controls.title.invalid) {
-          <p class="error">Title is required.</p>
-        }
-      </div>
-
-      <div class="field">
-        <label for="maxCapacity">Max Capacity</label>
-        <input id="maxCapacity" type="number" formControlName="maxCapacity" />
-        @if (form.controls.maxCapacity.enabled && form.controls.maxCapacity.touched && form.controls.maxCapacity.invalid) {
-          <p class="error">Enter a capacity between 1 and 200.</p>
-        }
-        @if (isEditMode()) {
-          <p class="hint">Capacity can't be changed after creation.</p>
-        }
-      </div>
-
-      @if (isAdmin()) {
-        <div class="field">
-          <label for="instructorId">Assigned Instructor</label>
-          <select id="instructorId" formControlName="instructorId">
-            <option value="">Unassigned</option>
-            @for (instructor of instructors(); track instructor.id) {
-              <option [value]="instructor.id">{{ instructor.name }}</option>
-            }
-          </select>
+<div class="course-form-container">
+  <div class="container-fluid py-4 py-lg-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10">
+        <!-- Loading State -->
+        @if (isLoading()) {
+        <div class="loading-container">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="mt-3 text-muted">Loading course details...</p>
         </div>
-      } @else if (!isEditMode()) {
-        <p class="hint">This course will be assigned to you as the instructor.</p>
-      }
+        } @else {
+        <!-- Form Card -->
+        <div class="form-card">
+          <!-- Card Header -->
+          <div class="card-header-section">
+            <h1 class="page-title mb-0">
+              <i class="bi bi-book-fill me-2"></i>
+              {{ isEditMode() ? 'Edit Course' : 'Create New Course' }}
+            </h1>
+            <p class="page-subtitle">
+              {{ isEditMode() ? 'Update course information' : 'Add a new course to your catalog' }}
+            </p>
+          </div>
 
-      @if (errorMessage()) {
-        <p class="error server-error">{{ errorMessage() }}</p>
-      }
+          <form [formGroup]="form" (ngSubmit)="submit()">
+            <!-- Course Code Field -->
+            <div class="form-group">
+              <div class="field-header">
+                <label for="code" class="form-label">
+                  <i class="bi bi-tag me-2"></i>Course Code
+                </label>
+                @if (isEditMode()) {
+                <span class="badge bg-info-subtle text-info-emphasis">Read-only</span>
+                }
+              </div>
+              <input id="code" type="text" class="form-control" formControlName="code" placeholder="e.g., CSE-101"
+                [class.is-invalid]="form.controls.code.enabled && form.controls.code.touched && form.controls.code.invalid" />
+              @if (form.controls.code.enabled && form.controls.code.touched && form.controls.code.invalid) {
+              <div class="invalid-feedback d-block">
+                <i class="bi bi-exclamation-circle me-1"></i>
+                Format must be XXX-000 (e.g., CSE-101).
+              </div>
+              }
+              @if (isEditMode()) {
+              <small class="form-text text-muted">
+                <i class="bi bi-info-circle me-1"></i>
+                Course code can't be changed after creation.
+              </small>
+              }
+            </div>
 
-      <div class="form-actions">
-        <button type="submit" [disabled]="isSubmitting()">
-          {{ isSubmitting() ? 'Saving...' : (isEditMode() ? 'Save Changes' : 'Create Course') }}
-        </button>
-        <a routerLink="/admin/courses">Cancel</a>
+            <!-- Title Field -->
+            <div class="form-group">
+              <label for="title" class="form-label">
+                <i class="bi bi-book me-2"></i>Course Title
+              </label>
+              <input id="title" type="text" class="form-control" formControlName="title"
+                placeholder="Enter course title"
+                [class.is-invalid]="form.controls.title.touched && form.controls.title.invalid" />
+              @if (form.controls.title.touched && form.controls.title.invalid) {
+              <div class="invalid-feedback d-block">
+                <i class="bi bi-exclamation-circle me-1"></i>
+                Course title is required.
+              </div>
+              }
+            </div>
+
+            <!-- Max Capacity Field -->
+            <div class="form-group">
+              <div class="field-header">
+                <label for="maxCapacity" class="form-label">
+                  <i class="bi bi-people me-2"></i>Max Capacity
+                </label>
+                @if (isEditMode()) {
+                <span class="badge bg-info-subtle text-info-emphasis">Read-only</span>
+                }
+              </div>
+              <input id="maxCapacity" type="number" class="form-control" formControlName="maxCapacity"
+                placeholder="Enter maximum number of students (1-200)"
+                [class.is-invalid]="form.controls.maxCapacity.enabled && form.controls.maxCapacity.touched && form.controls.maxCapacity.invalid" />
+              @if (form.controls.maxCapacity.enabled && form.controls.maxCapacity.touched &&
+              form.controls.maxCapacity.invalid) {
+              <div class="invalid-feedback d-block">
+                <i class="bi bi-exclamation-circle me-1"></i>
+                Enter a capacity between 1 and 200.
+              </div>
+              }
+              @if (isEditMode()) {
+              <small class="form-text text-muted">
+                <i class="bi bi-info-circle me-1"></i>
+                Capacity can't be changed after creation.
+              </small>
+              }
+            </div>
+
+            <!-- Instructor Assignment (Admin Only) -->
+            @if (isAdmin()) {
+            <div class="form-group">
+              <label for="instructorId" class="form-label">
+                <i class="bi bi-person-badge me-2"></i>Assigned Instructor
+              </label>
+              <select id="instructorId" class="form-control form-select" formControlName="instructorId">
+                <option value="">-- Unassigned --</option>
+                @for (instructor of instructors(); track instructor.id) {
+                <option [value]="instructor.id">{{ instructor.name }}</option>
+                }
+              </select>
+            </div>
+            } @else if (!isEditMode()) {
+            <div class="info-box">
+              <i class="bi bi-info-circle"></i>
+              <span>This course will be automatically assigned to you as the instructor.</span>
+            </div>
+            }
+
+            <!-- Error Message -->
+            @if (errorMessage()) {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <i class="bi bi-exclamation-triangle me-2"></i>
+              <strong>Error:</strong> {{ errorMessage() }}
+              <button type="button" class="btn-close" (click)="errorMessage()"></button>
+            </div>
+            }
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-submit" [disabled]="isSubmitting()">
+                <i class="bi me-2"
+                  [ngClass]="isSubmitting() ? 'bi-hourglass-split' : (isEditMode() ? 'bi-save' : 'bi-plus-circle')"></i>
+                {{ isSubmitting() ? 'Saving...' : (isEditMode() ? 'Save Changes' : 'Create Course') }}
+              </button>
+              <a routerLink="/admin/courses" class="btn btn-secondary btn-cancel">
+                <i class="bi bi-x-lg me-2"></i>Cancel
+              </a>
+            </div>
+          </form>
+        </div>
+        }
       </div>
-    </form>
-  }
+    </div>
+  </div>
 </div>

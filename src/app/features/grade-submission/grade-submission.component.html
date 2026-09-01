@@ -1,63 +1,101 @@
-<div class="max-w-md mx-auto my-8">
-  <mat-card class="shadow-xl rounded-2xl bg-slate-900 border border-slate-800 text-slate-100 p-6">
-    <mat-card-header class="mb-4">
-      <mat-card-title class="text-xl font-bold text-slate-100">
-        Grade Submission Form
-      </mat-card-title>
-      <mat-card-subtitle class="text-slate-400 text-sm">
-        Instructor Midterm Grading
-      </mat-card-subtitle>
-    </mat-card-header>
+<div class="grade-submission-container">
+  <div class="container-fluid py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <!-- Header Section -->
+        <div class="page-header mb-4">
+          <div class="d-flex align-items-center gap-3">
+            <div class="icon-box">
+              <i class="bi bi-pencil-square"></i>
+            </div>
+            <div>
+              <h1 class="page-title mb-0">Grade Submission Form</h1>
+              <p class="page-subtitle">Submit midterm grades for your students</p>
+            </div>
+          </div>
+        </div>
 
-    <form [formGroup]="gradeForm" (ngSubmit)="onSubmit()">
-      <mat-card-content class="space-y-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Student ID</mat-label>
-          <input matInput type="number" formControlName="studentId" />
-          <mat-error *ngIf="gradeForm.controls.studentId.hasError('required')">
-            Student ID is required
-          </mat-error>
-          <mat-error *ngIf="gradeForm.controls.studentId.hasError('min')">
-            Student ID must be greater than zero
-          </mat-error>
-        </mat-form-field>
+        <!-- Main Card -->
+        <mat-card class="grade-card">
+          <form [formGroup]="gradeForm" (ngSubmit)="onSubmit()">
+            <!-- Student ID Field -->
+            <div class="mb-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>
+                  <i class="bi bi-person-circle me-2"></i>Student ID
+                </mat-label>
+                <input matInput type="number" formControlName="studentId" />
+                <mat-error *ngIf="gradeForm.controls.studentId.hasError('required')">
+                  <i class="bi bi-exclamation-circle me-1"></i>Student ID is required
+                </mat-error>
+                <mat-error *ngIf="gradeForm.controls.studentId.hasError('min')">
+                  <i class="bi bi-exclamation-circle me-1"></i>Student ID must be greater than zero
+                </mat-error>
+              </mat-form-field>
+            </div>
 
-        <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Course ID</mat-label>
-          <input matInput type="number" formControlName="courseId" />
-          <mat-error *ngIf="gradeForm.controls.courseId.hasError('required')">
-            Course ID is required
-          </mat-error>
-          <mat-error *ngIf="gradeForm.controls.courseId.hasError('min')">
-            Course ID must be greater than zero
-          </mat-error>
-        </mat-form-field>
+            <!-- Course ID Field -->
+            <div class="mb-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>
+                  <i class="bi bi-book me-2"></i>Course ID
+                </mat-label>
+                <input matInput type="number" formControlName="courseId" />
+                <mat-error *ngIf="gradeForm.controls.courseId.hasError('required')">
+                  <i class="bi bi-exclamation-circle me-1"></i>Course ID is required
+                </mat-error>
+                <mat-error *ngIf="gradeForm.controls.courseId.hasError('min')">
+                  <i class="bi bi-exclamation-circle me-1"></i>Course ID must be greater than zero
+                </mat-error>
+              </mat-form-field>
+            </div>
 
-        <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Score (0-100)</mat-label>
-          <input matInput type="number" formControlName="score" />
-          <mat-error *ngIf="gradeForm.controls.score.hasError('required')">
-            Score is required
-          </mat-error>
-          <mat-error *ngIf="gradeForm.controls.score.hasError('min') || gradeForm.controls.score.hasError('max')">
-            Score must be between 0 and 100
-          </mat-error>
-        </mat-form-field>
+            <!-- Score Field -->
+            <div class="mb-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>
+                  <i class="bi bi-star me-2"></i>Score (0-100)
+                </mat-label>
+                <input matInput type="number" formControlName="score" />
+                <mat-error *ngIf="gradeForm.controls.score.hasError('required')">
+                  <i class="bi bi-exclamation-circle me-1"></i>Score is required
+                </mat-error>
+                <mat-error *ngIf="gradeForm.controls.score.hasError('min') || gradeForm.controls.score.hasError('max')">
+                  <i class="bi bi-exclamation-circle me-1"></i>Score must be between 0 and 100
+                </mat-error>
+              </mat-form-field>
+            </div>
 
-        <div *ngIf="isSubmitting" class="spinner-container">
-  <mat-spinner diameter="32"></mat-spinner>
-</div>
+            <!-- Loading Spinner -->
+            <div *ngIf="isSubmitting" class="spinner-container mb-4">
+              <div class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Submitting...</span>
+              </div>
+              <span class="ms-2">Submitting grade...</span>
+            </div>
 
-<div *ngIf="submissionStatus" class="status-message">
-  {{ submissionStatus }}
-</div>
-      </mat-card-content>
+            <!-- Status Message -->
+            <div *ngIf="submissionStatus" class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+              <i class="bi bi-check-circle me-2"></i>
+              {{ submissionStatus }}
+              <button type="button" class="btn-close" (click)="submissionStatus = ''"></button>
+            </div>
 
-      <mat-card-actions class="mt-4">
-        <button mat-raised-button color="primary" type="submit" [disabled]="gradeForm.invalid || isSubmitting" class="w-full py-3 text-base font-semibold">
-          Submit Final Grade
-        </button>
-      </mat-card-actions>
-    </form>
-  </mat-card>
+            <!-- Submit Button -->
+            <button mat-raised-button color="primary" type="submit" [disabled]="gradeForm.invalid || isSubmitting"
+              class="w-100 submit-btn">
+              <i class="bi bi-check-lg me-2"></i>
+              {{ isSubmitting ? 'Submitting...' : 'Submit Final Grade' }}
+            </button>
+          </form>
+        </mat-card>
+
+        <!-- Info Box -->
+        <div class="info-box mt-4">
+          <i class="bi bi-info-circle"></i>
+          <span>All fields are required. Score must be between 0 and 100.</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

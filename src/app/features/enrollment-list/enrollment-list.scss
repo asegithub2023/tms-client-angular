@@ -1,12 +1,373 @@
-.enrollment-list {
-  display: block;
+/* Enrollment Container */
+.enrollment-container {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* Page Header */
+.page-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  .icon-box {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 28px;
+    box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+  }
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: #718096;
+  margin-bottom: 0;
+}
+
+/* Stat Cards */
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+
+    &.pending {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    &.approved {
+      background: #d1fae5;
+      color: #059669;
+    }
+
+    &.rejected {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+  }
+
+  .stat-content {
+    h6 {
+      font-size: 12px;
+      font-weight: 600;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 0;
+    }
+  }
+}
+
+/* Table Card */
+.table-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+
+  h5 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+  }
+
+  .badge {
+    font-size: 12px;
+    padding: 0.4rem 0.75rem;
+    border-radius: 20px;
+  }
+}
+
+/* Table Responsive */
+.table-responsive {
   overflow-x: auto;
+  padding: 0;
 }
 
-.enrollment-list table {
+.enrollment-table {
   width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background: #f9fafb;
+
+    th {
+      padding: 1rem 1.5rem;
+      font-size: 13px;
+      font-weight: 700;
+      color: #374151;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid #e5e7eb;
+      text-align: left;
+
+      i {
+        color: #6b7280;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid #e5e7eb;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #f9fafb;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      td {
+        padding: 1rem 1.5rem;
+        font-size: 14px;
+        color: #374151;
+      }
+    }
+  }
 }
 
-.enrollment-list td button + button {
-  margin-left: 0.5rem;
+/* Student Cell */
+.student-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 500;
+
+  .student-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+  }
+}
+
+/* Status Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.75rem;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+
+  &.badge-pending {
+    background-color: #fef3c7;
+    color: #d97706;
+  }
+
+  &.badge-approved {
+    background-color: #d1fae5;
+    color: #059669;
+  }
+
+  &.badge-rejected {
+    background-color: #fee2e2;
+    color: #dc2626;
+  }
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+
+  button {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    i {
+      font-size: 14px;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  .btn-approve {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+
+    &:hover {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    }
+  }
+
+  .btn-reject {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+
+    &:hover {
+      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    }
+  }
+}
+
+/* Paginator Styling */
+::ng-deep .mat-mdc-paginator {
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+
+  .mat-mdc-paginator-container {
+    padding: 1rem 1.5rem;
+    justify-content: space-between;
+
+    .mat-mdc-paginator-page-size {
+      align-items: center;
+    }
+
+    .mat-mdc-paginator-range-actions {
+      justify-content: flex-end;
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page-header {
+    .icon-box {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+    }
+  }
+
+  .page-title {
+    font-size: 22px;
+  }
+
+  .page-subtitle {
+    font-size: 13px;
+  }
+
+  .stat-card {
+    padding: 1rem;
+    gap: 1rem;
+
+    .stat-icon {
+      width: 45px;
+      height: 45px;
+      font-size: 20px;
+    }
+
+    .stat-content {
+      h6 {
+        font-size: 11px;
+      }
+
+      .stat-value {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .enrollment-table {
+    font-size: 13px;
+
+    thead th {
+      padding: 0.75rem 1rem;
+      font-size: 12px;
+    }
+
+    tbody td {
+      padding: 0.75rem 1rem;
+    }
+  }
+
+  .action-buttons {
+    button {
+      padding: 0.35rem 0.6rem;
+      font-size: 11px;
+
+      i {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .student-cell .student-avatar {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
 }

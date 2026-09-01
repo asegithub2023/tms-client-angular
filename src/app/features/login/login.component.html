@@ -1,33 +1,53 @@
 <div class="auth-page">
-  <form class="auth-card" [formGroup]="form" (ngSubmit)="submit()">
-    <h1>Sign In</h1>
+  <!-- Form Side -->
+  <div class="auth-form-container">
+    <form class="auth-card" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-header">
+        <h1 class="form-title">Welcome Back</h1>
+        <p class="form-subtitle">Sign in to your account</p>
+      </div>
 
-    <div class="field">
-      <label for="email">Email</label>
-      <input id="email" type="email" formControlName="email" autocomplete="email" />
-      @if (form.controls.email.touched && form.controls.email.invalid) {
-        <p class="error">Enter a valid email address.</p>
+      <div class="field">
+        <label for="email">
+          <i class="bi bi-envelope"></i> Email
+        </label>
+        <input id="email" type="email" formControlName="email" autocomplete="email" placeholder="your@email.com"
+          class="input-field" />
+        @if (form.controls.email.touched && form.controls.email.invalid) {
+        <p class="error"><i class="bi bi-exclamation-circle"></i> Enter a valid email address.</p>
+        }
+      </div>
+
+      <div class="field">
+        <label for="password">
+          <i class="bi bi-lock"></i> Password
+        </label>
+        <input id="password" type="password" formControlName="password" autocomplete="current-password"
+          placeholder="Enter your password" class="input-field" />
+        @if (form.controls.password.touched && form.controls.password.invalid) {
+        <p class="error"><i class="bi bi-exclamation-circle"></i> Password is required.</p>
+        }
+      </div>
+
+      @if (errorMessage()) {
+      <div class="error-alert">
+        <i class="bi bi-exclamation-triangle"></i>
+        <p>{{ errorMessage() }}</p>
+      </div>
       }
-    </div>
 
-    <div class="field">
-      <label for="password">Password</label>
-      <input id="password" type="password" formControlName="password" autocomplete="current-password" />
-      @if (form.controls.password.touched && form.controls.password.invalid) {
-        <p class="error">Password is required.</p>
-      }
-    </div>
+      <button type="submit" [disabled]="isSubmitting()" class="btn-submit">
+        @if (isSubmitting()) {
+        <span class="spinner-small"></span>
+        Signing in...
+        } @else {
+        <i class="bi bi-box-arrow-in-right"></i> Sign In
+        }
+      </button>
 
-    @if (errorMessage()) {
-      <p class="error server-error">{{ errorMessage() }}</p>
-    }
-
-    <button type="submit" [disabled]="isSubmitting()">
-      {{ isSubmitting() ? 'Signing in...' : 'Sign In' }}
-    </button>
-
-    <p class="switch-link">
-      Don't have an account? <a routerLink="/register">Register</a>
-    </p>
-  </form>
+      <p class="switch-link">
+        Don't have an account? <a routerLink="/register" class="link-switch">Create one now</a>
+      </p>
+    </form>
+  </div>
 </div>

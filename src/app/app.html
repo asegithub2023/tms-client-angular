@@ -4,32 +4,32 @@
   </div>
 
   @if (auth.isLoggedIn()) {
-    <nav class="app-header__nav">
-      @if (auth.hasRole('Instructor')) {
-        <a routerLink="/instructor-dashboard" routerLinkActive="active">Dashboard</a>
-        <a routerLink="/instructor/courses" routerLinkActive="active">My Courses</a>
-        <a routerLink="/enrollments" routerLinkActive="active">Manage Enrollments</a>
-        <a routerLink="/grade-submission" routerLinkActive="active">Grades</a>
-      } @else {
-        <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-        <a routerLink="/enroll" routerLinkActive="active">Enroll</a>
-      }
+  <nav class="app-header__nav">
+    @if (auth.hasRole('Instructor')) {
+    <a routerLink="/instructor-dashboard" routerLinkActive="active">Dashboard</a>
+    <a routerLink="/instructor/courses" routerLinkActive="active">My Courses</a>
+    <a routerLink="/enrollments" routerLinkActive="active">Manage Enrollments</a>
+    <a routerLink="/grade-submission" routerLinkActive="active">Grades</a>
+    } @else {
+    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+    <a routerLink="/enroll" routerLinkActive="active">Enroll</a>
+    }
 
-      @if (auth.hasRole('Admin')) {
-        <a routerLink="/admin/courses" routerLinkActive="active">Admin Courses</a>
-      }
-    </nav>
+    @if (auth.hasRole('Admin')) {
+    <a routerLink="/admin/courses" routerLinkActive="active">Admin Courses</a>
+    }
+  </nav>
   }
 
   <div class="app-header__account">
     @if (auth.isLoggedIn()) {
-      <span class="app-header__user">
-        {{ auth.currentUser()?.displayName }} ({{ auth.currentUser()?.role }})
-      </span>
-      <button type="button" (click)="logout()">Log Out</button>
+    <span class="app-header__user">
+      {{ auth.currentUser()?.displayName }} ({{ auth.currentUser()?.role }})
+    </span>
+    <button type="button" (click)="logout()">Log Out</button>
     } @else {
-      <a routerLink="/login">Sign In</a>
-      <a routerLink="/register">Register</a>
+    <a routerLink="/login">Sign In</a>
+    <a routerLink="/register">Register</a>
     }
   </div>
 </header>

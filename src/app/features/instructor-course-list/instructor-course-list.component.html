@@ -1,38 +1,69 @@
 <div class="instructor-course-list">
-  <div class="instructor-course-list__header">
-    <h1>My Courses</h1>
-    <a routerLink="/admin/courses/new" class="instructor-course-list__new-btn">+ New Course</a>
+  <!-- Header -->
+  <div class="course-list-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <i class="bi bi-book"></i>
+      </div>
+      <div>
+        <h1 class="page-title">My Courses</h1>
+        <p class="page-subtitle">Manage and teach your assigned courses</p>
+      </div>
+    </div>
+    <a routerLink="/admin/courses/new" class="btn-new-course">
+      <i class="bi bi-plus-lg"></i> New Course
+    </a>
   </div>
 
+  <!-- Content -->
   @if (isLoading()) {
+  <div class="loading-state">
     <p>Loading your courses...</p>
+  </div>
   } @else if (errorMessage()) {
-    <p class="instructor-course-list__error">{{ errorMessage() }}</p>
+  <div class="error-state">
+    <p class="error-message">{{ errorMessage() }}</p>
+  </div>
   } @else if (courses().length === 0) {
-    <p>You don't have any courses assigned yet.</p>
+  <div class="empty-state">
+    <div class="empty-icon">
+      <i class="bi bi-inbox"></i>
+    </div>
+    <p class="empty-title">No courses yet</p>
+    <p class="empty-subtitle">You don't have any courses assigned yet.</p>
+    <a routerLink="/admin/courses/new" class="btn-new-course">
+      <i class="bi bi-plus-lg"></i> Create First Course
+    </a>
+  </div>
   } @else {
-    <table class="instructor-course-list__table">
-      <thead>
-        <tr>
-          <th>Code</th>
-          <th>Title</th>
-          <th>Enrolled</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (course of courses(); track course.id) {
-          <tr>
-            <td>{{ course.code }}</td>
-            <td>{{ course.title }}</td>
-            <td>{{ course.enrollmentCount }} / {{ course.maxCapacity }}</td>
-            <td>
-              <a [routerLink]="['/admin/courses', course.id, 'edit']">Edit</a>
-              <a [routerLink]="['/courses', course.id]">View</a>
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
+  <div class="courses-grid">
+    @for (course of courses(); track course.id) {
+    <div class="course-card">
+      <div class="course-card__header">
+        <div class="course-code">{{ course.code }}</div>
+        <div class="enrollment-badge">{{ course.enrollmentCount }} / {{ course.maxCapacity }}</div>
+      </div>
+      <h3 class="course-title">{{ course.title }}</h3>
+      <div class="course-stats">
+        <div class="stat">
+          <i class="bi bi-people"></i>
+          <span>{{ course.enrollmentCount }} enrolled</span>
+        </div>
+        <div class="stat">
+          <i class="bi bi-door-closed"></i>
+          <span>{{ course.maxCapacity - course.enrollmentCount }} spots</span>
+        </div>
+      </div>
+      <div class="course-actions">
+        <a [routerLink]="['/admin/courses', course.id, 'edit']" class="btn-action btn-edit">
+          <i class="bi bi-pencil"></i> Edit
+        </a>
+        <a [routerLink]="['/courses', course.id]" class="btn-action btn-view">
+          <i class="bi bi-eye"></i> View
+        </a>
+      </div>
+    </div>
+    }
+  </div>
   }
 </div>

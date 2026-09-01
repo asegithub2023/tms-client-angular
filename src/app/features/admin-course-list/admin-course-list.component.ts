@@ -16,4 +16,11 @@ export class AdminCourseListComponent implements OnInit {
   ngOnInit(): void {
     this.store.loadCourses();
   }
+
+  deleteCourse(id: number): void {
+    const confirmDelete = confirm('Are you sure you want to delete this course?');
+    if (confirmDelete) {
+      this.store.deleteCourse(id);
+    }
+  }
 }

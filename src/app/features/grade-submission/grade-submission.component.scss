@@ -1,57 +1,192 @@
-/* Page Container */
-.max-w-md {
-  max-width: 32rem;
+/* Grade Submission Container */
+.grade-submission-container {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.my-8 {
-  margin-top: 2rem;
+/* Page Header */
+.page-header {
+  display: flex;
+  align-items: center;
   margin-bottom: 2rem;
+
+  .icon-box {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 28px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  }
 }
 
-/* Card */
-mat-card {
-  border-radius: 20px !important;
-  padding: 1.5rem;
-  background: #ffffff;
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
-  border: 1px solid #e5e7eb;
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 0.25rem;
 }
 
-/* Header */
-mat-card-title {
-  font-size: 1.5rem !important;
-  font-weight: 700 !important;
-  color: #1e293b !important;
+.page-subtitle {
+  font-size: 14px;
+  color: #718096;
+  margin-bottom: 0;
 }
 
-mat-card-subtitle {
-  color: #64748b !important;
-  margin-top: 0.25rem;
+/* Grade Card */
+.grade-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  ::ng-deep .mat-mdc-form-field {
+    margin-bottom: 0;
+
+    .mat-mdc-text-field-wrapper {
+      padding-bottom: 0;
+    }
+  }
 }
 
 /* Form Fields */
-mat-form-field {
-  width: 100%;
+::ng-deep .mat-mdc-form-field-outline {
+  color: #e2e8f0 !important;
 }
 
-.mat-mdc-form-field {
-  margin-bottom: 0.75rem;
+::ng-deep .mat-mdc-form-field-focused .mat-mdc-form-field-outline {
+  color: #667eea !important;
+}
+
+/* Spinner Container */
+.spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: #f7fafc;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #4a5568;
+  gap: 0.5rem;
+
+  .spinner-border {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-width: 0.2em;
+  }
+}
+
+/* Alert Messages */
+.alert {
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  border: none;
+  background-color: #d4edda;
+  color: #155724;
+  padding: 0.875rem 1.25rem;
+
+  i {
+    font-size: 18px;
+  }
+
+  .btn-close {
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 0.75;
+    }
+  }
 }
 
 /* Submit Button */
-button[type="submit"] {
-  width: 100%;
-  height: 48px;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 1rem;
+.submit-btn {
+  padding: 0.875rem 1.5rem;
+  font-size: 16px;
+  font-weight: 700 !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff !important;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  i {
+    margin-right: 0.5rem;
+  }
+}
+
+/* Ensure button text is always visible */
+::ng-deep .submit-btn .mat-mdc-button-touch-target,
+::ng-deep .submit-btn .mdc-button__label {
+  color: #ffffff !important;
+}
+
+/* Info Box */
+.info-box {
+  background: #edf2f7;
+  border-left: 4px solid #667eea;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #2d3748;
+  font-size: 14px;
+
+  i {
+    font-size: 18px;
+    color: #667eea;
+    flex-shrink: 0;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .grade-card {
+    padding: 1.5rem;
+  }
+
+  .page-header {
+    margin-bottom: 1.5rem;
+
+    .icon-box {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+    }
+  }
+
+  .page-title {
+    font-size: 22px;
+  }
+
+  .page-subtitle {
+    font-size: 13px;
+  }
 }
 
 /* Status Message */
