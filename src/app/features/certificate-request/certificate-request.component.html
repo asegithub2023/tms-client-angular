@@ -8,21 +8,23 @@
   />
 
   <button type="button" (click)="request()" [disabled]="isRequesting()">
+    <i class="bi" [class.bi-hourglass-split]="isRequesting()" [class.bi-patch-check]="!isRequesting()"></i>
     {{ isRequesting() ? 'Requesting...' : 'Request Certificate' }}
   </button>
 
   @if (isRequesting()) {
     <p class="hint">
+      <i class="bi bi-info-circle"></i>
       This can take up to 20 seconds - the certificate provider is intentionally
       unreliable in this environment (used to demonstrate retry/circuit-breaker behavior).
     </p>
   }
 
   @if (resultMessage()) {
-    <p class="success">{{ resultMessage() }}</p>
+    <p class="success"><i class="bi bi-check-circle-fill"></i> {{ resultMessage() }}</p>
   }
 
   @if (errorMessage()) {
-    <p class="error">{{ errorMessage() }}</p>
+    <p class="error"><i class="bi bi-exclamation-triangle"></i> {{ errorMessage() }}</p>
   }
 </div>

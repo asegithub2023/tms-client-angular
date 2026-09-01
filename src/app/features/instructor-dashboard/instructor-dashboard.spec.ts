@@ -1,3 +1,16 @@
+// happy-dom/JSDOM don't implement IntersectionObserver, which Angular's
+// `@defer (on viewport)` trigger relies on internally. Without this, the
+// deferred block throws asynchronously after the test has already
+// finished, and that uncaught error can crash the Vitest worker process
+// running other spec files scheduled on the same worker.
+class MockIntersectionObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+  takeRecords() { return []; }
+}
+(globalThis as any).IntersectionObserver = MockIntersectionObserver;
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
@@ -16,9 +29,6 @@ describe('InstructorDashboardComponent', () => {
       providers: [
         provideRouter([]),
         provideHttpClient(),
-        // Real LiveSyncService tries to open a SignalR connection to
-        // /hubs/tms, which doesn't exist in the test environment and throws
-        // synchronously. Swap in a no-op fake for component-level specs.
         { provide: LiveSyncService, useValue: { connect: () => {}, events$: EMPTY } },
       ],
     }).compileComponents();

@@ -12,7 +12,6 @@ describe("CourseCardComponent", () => {
 
   it("should display the course title", async () => {
     const fixture = TestBed.createComponent(CourseCardComponent);
-    // Set signal-based required input
     fixture.componentRef.setInput("course", {
       id: 1,
       code: "CSE-101",
@@ -41,9 +40,7 @@ describe("CourseCardComponent", () => {
     let emittedCourse: any = null;
     component.enrollClicked.subscribe((c: any) => (emittedCourse = c));
 
-    const button = fixture.nativeElement.querySelector(
-      "button",
-    ) as HTMLButtonElement;
+    const button = fixture.nativeElement.querySelector("button") as HTMLButtonElement;
     button.click();
     await fixture.whenStable();
 

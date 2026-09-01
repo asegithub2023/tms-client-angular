@@ -1,33 +1,44 @@
-<div class="course-card" [class.closed]="course().enrollmentCount >= course().maxCapacity">
+<div class="course-card" [class.course-card--full]="course().enrollmentCount >= course().maxCapacity">
+  <div class="course-card__top">
+    <span class="course-card__code">{{ course().code }}</span>
+    <span class="course-card__badge"
+      [class.course-card__badge--full]="course().enrollmentCount >= course().maxCapacity">
+      <i class="bi" [class.bi-check-circle]="course().enrollmentCount < course().maxCapacity"
+        [class.bi-x-circle]="course().enrollmentCount >= course().maxCapacity"></i>
+      {{ course().enrollmentCount >= course().maxCapacity ? "Full" : "Open" }}
+    </span>
+  </div>
+
   <h3>
-    <a [routerLink]="['/courses', course().id]">
-      {{ course().title }} ({{ course().code }})
-    </a>
+    <a [routerLink]="['/courses', course().id]">{{ course().title }}</a>
   </h3>
 
-  <p>
-    Enrolled {{ course().enrollmentCount }} of {{ course().maxCapacity }} seats
-  </p>
-
-  <p class="status">
-    {{ course().enrollmentCount >= course().maxCapacity ? "Full" : "Accepting enrollments" }}
-  </p>
+  <div class="course-card__seats">
+    <div class="course-card__seats-bar">
+      <div class="course-card__seats-fill" [style.width.%]="(course().enrollmentCount / course().maxCapacity) * 100">
+      </div>
+    </div>
+    <span><i class="bi bi-people"></i> {{ course().enrollmentCount }} / {{ course().maxCapacity }} seats</span>
+  </div>
 
   @if (auth.isExactRole('Instructor') && course().instructorId === auth.currentUser()?.userId) {
-    <p class="course-card__owned">Your course</p>
+  <p class="course-card__owned"><i class="bi bi-person-check"></i> Your course</p>
   }
 
   <div class="course-card__actions">
-    <button
-      type="button"
-      (click)="enrollClicked.emit(course())"
-      [disabled]="course().enrollmentCount >= course().maxCapacity || busy()"
-    >
+    <button type="button" (click)="enrollClicked.emit(course())"
+      [disabled]="course().enrollmentCount >= course().maxCapacity || busy()">
+      <i class="bi" [class.bi-hourglass-split]="busy()" [class.bi-plus-lg]="!busy()"></i>
       {{ busy() ? 'Enrolling...' : 'Enroll' }}
     </button>
 
     @if (auth.hasRole('Admin')) {
-      <a [routerLink]="['/admin/courses', course().id, 'edit']" class="course-card__edit-link">Edit</a>
+    <a [routerLink]="['/admin/courses', course().id, 'edit']" class="course-card__edit-link">
+      <i class="bi bi-pencil-square"></i> Edit
+    </a>
+    <button type="button" (click)="deleteClicked.emit(course())" class="course-card__delete-btn" title="Delete course">
+      <i class="bi bi-trash"></i> Delete
+    </button>
     }
   </div>
 </div>

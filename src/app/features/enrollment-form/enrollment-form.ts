@@ -1,54 +1,69 @@
-import { Component, inject, signal } from "@angular/core";
-import {
-  FormBuilder,
-  FormControl,
-  ReactiveFormsModule,
-  Validators,
-} from "@angular/forms";
+import { Component, computed, inject, signal } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { RouterLink } from "@angular/router";
+import { rxResource } from "@angular/core/rxjs-interop";
+import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
+import { CourseService } from "../../services/course";
+import { EnrollmentService } from "../../services/enrollment";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: "app-enrollment-form",
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: "./enrollment-form.html",
   styleUrl: "./enrollment-form.scss",
 })
 export class EnrollmentFormComponent {
   private fb = inject(FormBuilder);
-  submitted = signal(false);
+  private courseApi = inject(CourseService);
+  private enrollmentApi = inject(EnrollmentService);
+  private auth = inject(AuthService);
 
-  form = this.fb.nonNullable.group({
-    studentId: ["", [Validators.required, Validators.pattern("^STU-[0-9]{4}$")]],
-    courseId: ["", Validators.required],
-    term: ["Fall 2026", Validators.required],
-    notes: [""],
-    backupCourses: this.fb.array<FormControl<string>>([]),
+  private studentId = computed(() => this.auth.currentUser()?.studentId ?? null);
+
+  isSubmitting = signal(false);
+  submitted = signal(false);
+  errorMessage = signal<string | null>(null);
+
+  coursesResource = rxResource({
+    stream: () => this.courseApi.getAll(),
   });
 
-  get backups() {
-    return this.form.controls.backupCourses;
-  }
+  form = this.fb.nonNullable.group({
+    courseCode: ["", Validators.required],
+  });
 
-  addBackup() {
-    this.backups.push(
-      this.fb.control("", {
-        nonNullable: true,
-        validators: Validators.required,
-      })
-    );
-  }
-
-  removeBackup(index: number) {
-    this.backups.removeAt(index);
-  }
-
-  submit() {
-    if (this.form.valid) {
-      const payload = this.form.getRawValue();
-      console.log("Enrollment payload:", payload);
-      this.submitted.set(true);
-    } else {
+  submit(): void {
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
+      return;
     }
+
+    const studentId = this.studentId();
+    if (studentId === null) {
+      this.errorMessage.set(
+        "Your account isn't linked to a student record. Log in with a Student account to enroll."
+      );
+      return;
+    }
+
+    this.isSubmitting.set(true);
+    this.errorMessage.set(null);
+
+    this.enrollmentApi
+      .create({ studentId, courseCode: this.form.getRawValue().courseCode })
+      .subscribe({
+        next: () => {
+          this.isSubmitting.set(false);
+          this.submitted.set(true);
+        },
+        error: (err) => {
+          this.isSubmitting.set(false);
+          this.errorMessage.set(
+            err?.error?.detail ?? "Could not complete enrollment. Please try again."
+          );
+        },
+      });
   }
 }

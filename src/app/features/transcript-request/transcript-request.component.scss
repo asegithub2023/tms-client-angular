@@ -1,18 +1,22 @@
 .transcript-request {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  max-width: 400px;
+  gap: 0.6rem;
 }
 
 .transcript-request button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   align-self: flex-start;
-  padding: 0.4rem 1rem;
+  padding: 0.5rem 1rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   background: var(--mat-sys-primary);
   color: var(--mat-sys-on-primary);
   cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
 }
 
 .transcript-request button:disabled {
@@ -21,16 +25,22 @@
   cursor: not-allowed;
 }
 
-.transcript-status {
-  font-size: 0.9rem;
+.btn-download {
+  background: #2e7d32 !important;
 }
 
-.hint {
-  font-size: 0.8rem;
-  color: var(--mat-sys-on-surface-variant);
+.transcript-status {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
 }
 
 .error {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   color: #c62828;
   font-weight: 600;
+  font-size: 0.85rem;
 }

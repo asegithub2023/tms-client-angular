@@ -46,9 +46,6 @@ describe("EnrollmentService", () => {
       enrolledAt: "2026-08-12T10:00:00Z",
     });
 
-    // approve() is typed Observable<void> in your service, but that's a
-    // compile-time label only — HttpClient still delivers whatever the
-    // server actually sends, so the flushed body really does come through.
     const approved = await result as any;
     expect(approved.status).toBe("Approved");
   });

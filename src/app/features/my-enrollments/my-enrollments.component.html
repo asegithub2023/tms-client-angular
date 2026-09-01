@@ -1,10 +1,10 @@
 <div class="my-enrollments">
   @if (isLoading()) {
-    <p>Loading your enrollments...</p>
+    <p class="hint"><i class="bi bi-arrow-repeat spin"></i> Loading your enrollments...</p>
   } @else if (error()) {
-    <p class="my-enrollments__error">{{ error() }}</p>
+    <p class="my-enrollments__error"><i class="bi bi-exclamation-triangle"></i> {{ error() }}</p>
   } @else if (enrollments().length === 0) {
-    <p>You have no enrollments yet.</p>
+    <p class="hint"><i class="bi bi-inbox"></i> You have no enrollments yet.</p>
   } @else {
     <table class="my-enrollments__table">
       <thead>
@@ -25,6 +25,11 @@
                 [class.approved]="row.status === 'Approved'"
                 [class.rejected]="row.status === 'Rejected'"
               >
+                <i class="bi"
+                  [class.bi-hourglass-split]="row.status === 'Pending'"
+                  [class.bi-check-circle-fill]="row.status === 'Approved'"
+                  [class.bi-x-circle-fill]="row.status === 'Rejected'"
+                ></i>
                 {{ row.status }}
               </span>
             </td>

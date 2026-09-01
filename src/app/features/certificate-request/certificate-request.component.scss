@@ -1,24 +1,35 @@
 .certificate-request {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  max-width: 360px;
+  gap: 0.6rem;
+}
+
+.certificate-request label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--mat-sys-on-surface-variant);
 }
 
 .certificate-request input {
-  padding: 0.5rem;
+  padding: 0.55rem 0.7rem;
   border: 1px solid var(--mat-sys-outline);
-  border-radius: 6px;
+  border-radius: 8px;
+  font-size: 0.9rem;
 }
 
 .certificate-request button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   align-self: flex-start;
-  padding: 0.4rem 1rem;
+  padding: 0.5rem 1rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   background: var(--mat-sys-primary);
   color: var(--mat-sys-on-primary);
   cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
 }
 
 .certificate-request button:disabled {
@@ -28,16 +39,27 @@
 }
 
 .hint {
-  font-size: 0.8rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  font-size: 0.78rem;
   color: var(--mat-sys-on-surface-variant);
 }
 
 .success {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   color: #2e7d32;
   font-weight: 600;
+  font-size: 0.85rem;
 }
 
 .error {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   color: #c62828;
   font-weight: 600;
+  font-size: 0.85rem;
 }

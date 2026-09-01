@@ -39,6 +39,10 @@ export class StudentDashboardComponent {
     this.earnedCredits() >= 120 ? "Eligible for Graduation" : "In Progress"
   );
 
+  pendingCount = computed(
+    () => this.myEnrollments()?.enrollments().filter((e) => e.status === 'Pending').length ?? 0
+  );
+
   selectedCourse = signal<Course | null>(null);
   enrollingCourseId = signal<number | null>(null);
   enrollMessage = signal<string | null>(null);

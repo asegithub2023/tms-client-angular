@@ -1,51 +1,57 @@
-<h2>Course Enrollment</h2>
-
-@if (submitted()) {
-  <p>Enrollment submitted. Check the console for the payload.</p>
-} @else {
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <div>
-      <label for="studentId">Student ID</label><br />
-      <input id="studentId" formControlName="studentId" />
-      @if (form.controls.studentId.touched && form.controls.studentId.invalid) {
-        <p class="error">Enter a valid Student ID (format: STU-0000)</p>
-      }
-    </div>
-
-    <div>
-      <label for="courseId">Course ID</label><br />
-      <input id="courseId" formControlName="courseId" />
-      @if (form.controls.courseId.touched && form.controls.courseId.invalid) {
-        <p class="error">Course ID is required</p>
-      }
-    </div>
-
-    <div>
-      <label for="term">Term</label><br />
-      <select id="term" formControlName="term">
-        <option value="Fall 2026">Fall 2026</option>
-        <option value="Spring 2027">Spring 2027</option>
-      </select>
-    </div>
-
-    <div>
-      <label for="notes">Notes (optional)</label><br />
-      <textarea id="notes" formControlName="notes"></textarea>
-    </div>
-
-    <h3>Backup Courses</h3>
-
-    @for (backup of backups.controls; track $index) {
-      <div class="backup-row">
-        <input [formControl]="backups.at($index)" placeholder="Backup course" />
-        <button type="button" (click)="removeBackup($index)">Remove</button>
+<div class="enroll-page">
+  <div class="enroll-card">
+    <div class="enroll-card__header">
+      <i class="bi bi-journal-plus"></i>
+      <div>
+        <h1>Course Enrollment</h1>
+        <p>Pick a course below and confirm to submit your enrollment request.</p>
       </div>
+    </div>
+
+    @if (submitted()) {
+      <div class="enroll-success">
+        <i class="bi bi-check-circle-fill"></i>
+        <h2>Enrollment submitted</h2>
+        <p>Your request is now Pending review by an instructor.</p>
+        <a routerLink="/dashboard" class="btn btn--primary">
+          <i class="bi bi-arrow-left"></i> Back to Dashboard
+        </a>
+      </div>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="field">
+          <label for="courseCode"><i class="bi bi-book"></i> Course</label>
+
+          @if (coursesResource.isLoading()) {
+            <p class="hint"><i class="bi bi-arrow-repeat spin"></i> Loading courses...</p>
+          } @else if (coursesResource.error()) {
+            <p class="hint hint--error"><i class="bi bi-exclamation-triangle"></i> Could not load courses.</p>
+          } @else {
+            <select id="courseCode" formControlName="courseCode">
+              <option value="" disabled>Select a course</option>
+              @for (course of (coursesResource.value() ?? []); track course.id) {
+                <option [value]="course.code" [disabled]="course.enrollmentCount >= course.maxCapacity">
+                  {{ course.code }} - {{ course.title }}
+                  @if (course.enrollmentCount >= course.maxCapacity) { (Full) }
+                </option>
+              }
+            </select>
+          }
+
+          @if (form.controls.courseCode.touched && form.controls.courseCode.invalid) {
+            <p class="error"><i class="bi bi-exclamation-circle"></i> Select a course to enroll in.</p>
+          }
+        </div>
+
+        @if (errorMessage()) {
+          <p class="error error--server"><i class="bi bi-exclamation-triangle"></i> {{ errorMessage() }}</p>
+        }
+
+        <button type="submit" class="btn btn--primary" [disabled]="isSubmitting()">
+          <i class="bi" [class.bi-hourglass-split]="isSubmitting()" [class.bi-check2-circle]="!isSubmitting()"></i>
+          {{ isSubmitting() ? 'Submitting...' : 'Confirm Enrollment' }}
+        </button>
+      </form>
     }
-
-    <button type="button" (click)="addBackup()">Add Backup Course</button>
-
-    <hr />
-
-    <button type="submit">Confirm Enrollment</button>
-  </form>
-}
+  </div>
+</div>
