@@ -74,9 +74,15 @@
               <span class="ms-2">Submitting grade...</span>
             </div>
 
-            <!-- Status Message -->
-            <div *ngIf="submissionStatus" class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-              <i class="bi bi-check-circle me-2"></i>
+                       <!-- Status Message -->
+            <div
+              *ngIf="submissionStatus"
+              class="alert alert-dismissible fade show mb-4"
+              [class.alert-success]="!isError"
+              [class.alert-danger]="isError"
+              role="alert"
+            >
+              <i class="bi me-2" [class.bi-check-circle]="!isError" [class.bi-exclamation-triangle]="isError"></i>
               {{ submissionStatus }}
               <button type="button" class="btn-close" (click)="submissionStatus = ''"></button>
             </div>

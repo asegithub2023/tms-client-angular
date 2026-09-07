@@ -95,7 +95,7 @@ export class CourseFormComponent implements OnInit {
       this.api.update(id, { title: raw.title, instructorId }).subscribe({
         next: () => {
           this.isSubmitting.set(false);
-          this.router.navigateByUrl('/admin/courses');
+          this.router.navigateByUrl(this.successRedirectUrl());
         },
         error: (err) => {
           this.isSubmitting.set(false);
@@ -113,7 +113,7 @@ export class CourseFormComponent implements OnInit {
         .subscribe({
           next: () => {
             this.isSubmitting.set(false);
-            this.router.navigateByUrl('/admin/courses');
+            this.router.navigateByUrl(this.successRedirectUrl());
           },
           error: (err) => {
             this.isSubmitting.set(false);
@@ -123,5 +123,12 @@ export class CourseFormComponent implements OnInit {
           },
         });
     }
+  }
+
+  // Admin manages the full course list at /admin/courses (Admin-only route).
+  // An Instructor isn't allowed there - their landing page after
+  // create/edit is their own course list instead.
+  private successRedirectUrl(): string {
+    return this.isAdmin() ? '/admin/courses' : '/instructor/courses';
   }
 }

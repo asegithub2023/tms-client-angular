@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -39,6 +40,7 @@ export class GradeSubmissionComponent {
 
   isSubmitting = false;
   submissionStatus = '';
+  isError = false;
 
   private submitClick$ = new Subject<GradePayload>();
 
@@ -47,6 +49,7 @@ export class GradeSubmissionComponent {
       .pipe(
         exhaustMap((payload) => {
           this.isSubmitting = true;
+          this.isError = false;
           this.submissionStatus = 'Submitting grade to server...';
           return this.api.postGrade(payload);
         }),
@@ -55,11 +58,13 @@ export class GradeSubmissionComponent {
       .subscribe({
         next: (result) => {
           this.isSubmitting = false;
+          this.isError = false;
           this.submissionStatus = `Grade saved successfully! Record ID: ${result.id}`;
         },
-        error: (err) => {
+        error: (err: unknown) => {
           this.isSubmitting = false;
-          this.submissionStatus = `Submission failed: ${err?.message ?? 'Server error'}`;
+          this.isError = true;
+          this.submissionStatus = this.extractErrorMessage(err);
         },
       });
   }
@@ -73,5 +78,19 @@ export class GradeSubmissionComponent {
         score: Number(rawValue.score),
       });
     }
+  }
+
+  // The API returns ProblemDetails ({ detail: "..." }) for every rejection
+  // case (wrong instructor, student not registered, invalid score, etc).
+  // Fall back to the generic HTTP message only if that's missing.
+  private extractErrorMessage(err: unknown): string {
+    if (err instanceof HttpErrorResponse) {
+      const detail = err.error?.detail;
+      if (typeof detail === 'string' && detail.trim().length > 0) {
+        return detail;
+      }
+    }
+
+    return `Submission failed: ${(err as { message?: string })?.message ?? 'Server error'}`;
   }
 }
