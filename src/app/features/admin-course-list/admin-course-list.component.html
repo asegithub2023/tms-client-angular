@@ -3,7 +3,6 @@
     <h1>All Courses (Admin)</h1>
     <a routerLink="/admin/courses/new" class="admin-course-list__new-btn">+ New Course</a>
   </div>
-
   <div class="admin-course-list__grid">
     @for (course of store.entities(); track course.id) {
     <tms-course-card [course]="course" (deleteClicked)="deleteCourse(course.id)" />
@@ -11,7 +10,6 @@
     <p class="admin-course-list__empty">No courses found.</p>
     }
   </div>
-
   @if (store.error()) {
   <div class="alert alert-danger mt-4">
     <i class="bi bi-exclamation-circle me-2"></i>

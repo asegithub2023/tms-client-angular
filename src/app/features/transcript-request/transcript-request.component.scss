@@ -3,7 +3,6 @@
   flex-direction: column;
   gap: 0.6rem;
 }
-
 .transcript-request button {
   display: inline-flex;
   align-items: center;
@@ -18,24 +17,20 @@
   font-weight: 600;
   font-size: 0.85rem;
 }
-
 .transcript-request button:disabled {
   background: var(--mat-sys-surface-container-high);
   color: var(--mat-sys-on-surface-variant);
   cursor: not-allowed;
 }
-
 .btn-download {
   background: #2e7d32 !important;
 }
-
 .transcript-status {
   display: flex;
   align-items: center;
   gap: 0.4rem;
   font-size: 0.85rem;
 }
-
 .error {
   display: flex;
   align-items: center;

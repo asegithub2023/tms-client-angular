@@ -2,7 +2,6 @@
   width: 100%;
   border-collapse: collapse;
 }
-
 .my-enrollments__table th {
   text-align: left;
   padding: 0.6rem 0.5rem;
@@ -12,16 +11,13 @@
   color: var(--mat-sys-on-surface-variant);
   border-bottom: 2px solid var(--mat-sys-outline-variant);
 }
-
 .my-enrollments__table td {
   padding: 0.7rem 0.5rem;
   border-bottom: 1px solid var(--mat-sys-outline-variant);
 }
-
 .my-enrollments__table tr:hover td {
   background: var(--mat-sys-surface-container-high);
 }
-
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -31,35 +27,29 @@
   font-size: 0.78rem;
   font-weight: 600;
 }
-
 .status-badge.pending {
   background: #fff3e0;
   color: #ef6c00;
 }
-
 .status-badge.approved {
   background: #e8f5e9;
   color: #2e7d32;
 }
-
 .status-badge.rejected {
   background: #ffebee;
   color: #c62828;
 }
-
 .hint {
   display: flex;
   align-items: center;
   gap: 0.4rem;
   color: var(--mat-sys-on-surface-variant);
 }
-
 .my-enrollments__error {
   display: flex;
   align-items: center;
   gap: 0.4rem;
   color: #c62828;
 }
-
 .spin { animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }

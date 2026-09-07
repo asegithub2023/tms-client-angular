@@ -6,7 +6,6 @@ import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { CourseService } from "../../services/course";
 import { EnrollmentService } from "../../services/enrollment";
 import { AuthService } from "../../services/auth.service";
-
 @Component({
   selector: "app-enrollment-form",
   standalone: true,
@@ -19,27 +18,21 @@ export class EnrollmentFormComponent {
   private courseApi = inject(CourseService);
   private enrollmentApi = inject(EnrollmentService);
   private auth = inject(AuthService);
-
   private studentId = computed(() => this.auth.currentUser()?.studentId ?? null);
-
   isSubmitting = signal(false);
   submitted = signal(false);
   errorMessage = signal<string | null>(null);
-
   coursesResource = rxResource({
     stream: () => this.courseApi.getAll(),
   });
-
   form = this.fb.nonNullable.group({
     courseCode: ["", Validators.required],
   });
-
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
-
     const studentId = this.studentId();
     if (studentId === null) {
       this.errorMessage.set(
@@ -47,10 +40,8 @@ export class EnrollmentFormComponent {
       );
       return;
     }
-
     this.isSubmitting.set(true);
     this.errorMessage.set(null);
-
     this.enrollmentApi
       .create({ studentId, courseCode: this.form.getRawValue().courseCode })
       .subscribe({

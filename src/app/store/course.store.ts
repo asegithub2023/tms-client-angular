@@ -18,21 +18,16 @@ import {
   pipe,
   tap,
 } from 'rxjs';
-
 import { Course } from '../models/course.model';
 import { CourseService } from '../services/course';
-
 export const CourseStore = signalStore(
   { providedIn: 'root' },
-
   withState({
     isLoading: false,
     error: null as string | null,
     deleteStatus: 'idle' as 'idle' | 'deleting' | 'success' | 'error',
   }),
-
   withEntities<Course>(),
-
   withMethods((store, api = inject(CourseService)) => ({
     loadCourses: rxMethod<void>(
       pipe(
@@ -60,15 +55,13 @@ export const CourseStore = signalStore(
         )
       )
     ),
-
     deleteCourse(id: number) {
+      // Remove immediately for responsiveness and restore the snapshot on failure.
       const previousSnapshot = store.entities();
-
       patchState(store, removeEntity(id), {
         deleteStatus: 'deleting',
         error: null,
       });
-
       api
         .delete(id)
         .pipe(

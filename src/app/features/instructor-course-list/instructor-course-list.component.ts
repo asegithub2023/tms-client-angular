@@ -2,7 +2,6 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CourseService } from '../../services/course';
 import { Course } from '../../models/course.model';
-
 @Component({
   selector: 'app-instructor-course-list',
   standalone: true,
@@ -12,11 +11,9 @@ import { Course } from '../../models/course.model';
 })
 export class InstructorCourseListComponent implements OnInit {
   private api = inject(CourseService);
-
   courses = signal<Course[]>([]);
   isLoading = signal(true);
   errorMessage = signal<string | null>(null);
-
   ngOnInit(): void {
     this.api.getMine().subscribe({
       next: (courses) => {

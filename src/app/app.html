@@ -2,7 +2,6 @@
   <div class="app-header__brand">
     <a routerLink="/dashboard">TMS</a>
   </div>
-
   @if (auth.isLoggedIn()) {
   <nav class="app-header__nav">
     @if (auth.hasRole('Instructor')) {
@@ -14,13 +13,11 @@
     <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
     <a routerLink="/enroll" routerLinkActive="active">Enroll</a>
     }
-
     @if (auth.hasRole('Admin')) {
     <a routerLink="/admin/courses" routerLinkActive="active">Admin Courses</a>
     }
   </nav>
   }
-
   <div class="app-header__account">
     @if (auth.isLoggedIn()) {
     <span class="app-header__user">
@@ -33,7 +30,6 @@
     }
   </div>
 </header>
-
 <main class="app-main">
   <router-outlet></router-outlet>
 </main>

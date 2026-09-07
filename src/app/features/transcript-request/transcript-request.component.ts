@@ -3,17 +3,14 @@ import { CommonModule } from '@angular/common';
 import { interval, Subscription, switchMap, takeWhile } from 'rxjs';
 import { TranscriptService, TranscriptStatus } from '../../services/transcript.service';
 import { AuthService } from '../../services/auth.service';
-
 const READY = 2;
 const FAILED = 3;
-
 const STATE_LABELS: Record<number, string> = {
   0: 'Queued',
   1: 'Processing',
   2: 'Ready',
   3: 'Failed',
 };
-
 @Component({
   selector: 'app-transcript-request',
   standalone: true,
@@ -24,39 +21,30 @@ const STATE_LABELS: Record<number, string> = {
 export class TranscriptRequestComponent implements OnDestroy {
   private api = inject(TranscriptService);
   private auth = inject(AuthService);
-
   status = signal<TranscriptStatus | null>(null);
   errorMessage = signal<string | null>(null);
   isRequesting = signal(false);
   isDownloading = signal(false);
-
   private studentId = computed(() => this.auth.currentUser()?.studentId ?? null);
   private pollSub?: Subscription;
-
   readonly READY = READY;
   readonly FAILED = FAILED;
-
   stateLabel(state: number): string {
     return STATE_LABELS[state] ?? 'Unknown';
   }
-
   private isDone(state: number): boolean {
     return state === READY || state === FAILED;
   }
-
   request(): void {
     const studentId = this.studentId();
-
     if (studentId === null) {
       this.errorMessage.set("Your account isn't linked to a student record.");
       return;
     }
-
     this.isRequesting.set(true);
     this.errorMessage.set(null);
     this.status.set(null);
     this.pollSub?.unsubscribe();
-
     this.api.request(studentId).subscribe({
       next: (status) => {
         this.isRequesting.set(false);
@@ -69,14 +57,9 @@ export class TranscriptRequestComponent implements OnDestroy {
       },
     });
   }
-
-  // A plain <a href> would skip the jwtInterceptor (raw browser navigation
-  // never touches Angular's HttpClient), so the download goes through
-  // HttpClient and gets saved from the in-memory blob response instead.
   download(reportId: string): void {
     this.isDownloading.set(true);
     this.errorMessage.set(null);
-
     this.api.download(reportId).subscribe({
       next: ({ blob, fileName }) => {
         this.isDownloading.set(false);
@@ -93,7 +76,6 @@ export class TranscriptRequestComponent implements OnDestroy {
       },
     });
   }
-
   private startPolling(reportId: string): void {
     this.pollSub = interval(2000)
       .pipe(
@@ -105,7 +87,6 @@ export class TranscriptRequestComponent implements OnDestroy {
         error: () => this.errorMessage.set('Lost track of the transcript request status.'),
       });
   }
-
   ngOnDestroy(): void {
     this.pollSub?.unsubscribe();
   }

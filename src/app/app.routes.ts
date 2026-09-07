@@ -5,8 +5,8 @@ import { AdminCourseListComponent } from "./features/admin-course-list/admin-cou
 import { roleGuard } from "./guards/role.guard";
 import { authGuard } from "./guards/auth.guard";
 import { studentDashboardGuard } from "./guards/student-dashboard.guard";
-
 export const routes: Routes = [
+  // Public entry points remain available without authentication.
   {
     path: "login",
     loadComponent: () =>
@@ -24,16 +24,15 @@ export const routes: Routes = [
         (m) => m.UnauthorizedComponent
       ),
   },
-
   {
     path: "dashboard",
+    // Student access is checked separately because the dashboard is role-specific.
     canActivate: [studentDashboardGuard],
     loadComponent: () =>
       import("./features/student-dashboard/student-dashboard").then(
         (m) => m.StudentDashboardComponent
       ),
   },
-
   {
     path: 'enrollments',
     component: EnrollmentListComponent,
@@ -47,8 +46,6 @@ export const routes: Routes = [
         (m) => m.EnrollmentFormComponent
       ),
   },
-
-
   {
     path: 'grade-submission',
     canActivate: [roleGuard('Instructor')],
@@ -57,7 +54,6 @@ export const routes: Routes = [
         (m) => m.GradeSubmissionComponent
       ),
   },
-
   {
     path: 'instructor-dashboard',
     component: InstructorDashboardComponent,
@@ -79,7 +75,6 @@ export const routes: Routes = [
         (m) => m.CourseDetailComponent
       ),
   },
-
 {
   path: 'admin/courses/new',
   canActivate: [roleGuard('Instructor')],
@@ -101,7 +96,5 @@ export const routes: Routes = [
   component: AdminCourseListComponent,
   canActivate: [roleGuard('Admin')]
 },
-
-
   { path: "", redirectTo: "dashboard", pathMatch: "full" },
 ];

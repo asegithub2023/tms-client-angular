@@ -3,25 +3,21 @@
     <i class="bi" [class.bi-hourglass-split]="isRequesting()" [class.bi-file-earmark-arrow-down]="!isRequesting()"></i>
     {{ isRequesting() ? 'Requesting...' : 'Request Transcript' }}
   </button>
-
   @if (status(); as s) {
     <p class="transcript-status">
       <i class="bi bi-info-circle"></i>
       Status: <strong>{{ stateLabel(s.state) }}</strong> (Report {{ s.reportId }})
     </p>
-
     @if (s.state === READY) {
       <button type="button" class="btn-download" (click)="download(s.reportId)" [disabled]="isDownloading()">
         <i class="bi bi-download"></i>
         {{ isDownloading() ? 'Downloading...' : 'Download Transcript' }}
       </button>
     }
-
     @if (s.state === FAILED && s.errorMessage) {
       <p class="error"><i class="bi bi-exclamation-triangle"></i> {{ s.errorMessage }}</p>
     }
   }
-
   @if (errorMessage()) {
     <p class="error"><i class="bi bi-exclamation-triangle"></i> {{ errorMessage() }}</p>
   }

@@ -10,9 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subject } from 'rxjs';
 import { exhaustMap } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-
 import { GradePayload, GradeService } from '../../services/grade.service';
-
 @Component({
   selector: 'tms-grade-submission',
   standalone: true,
@@ -31,19 +29,15 @@ import { GradePayload, GradeService } from '../../services/grade.service';
 export class GradeSubmissionComponent {
   private api = inject(GradeService);
   private fb = inject(FormBuilder);
-
   gradeForm = this.fb.group({
     studentId: [1, [Validators.required, Validators.min(1)]],
     courseId: [1, [Validators.required, Validators.min(1)]],
     score: [88, [Validators.required, Validators.min(0), Validators.max(100)]],
   });
-
   isSubmitting = false;
   submissionStatus = '';
   isError = false;
-
   private submitClick$ = new Subject<GradePayload>();
-
   constructor() {
     this.submitClick$
       .pipe(
@@ -68,7 +62,6 @@ export class GradeSubmissionComponent {
         },
       });
   }
-
   onSubmit() {
     if (this.gradeForm.valid) {
       const rawValue = this.gradeForm.getRawValue();
@@ -79,10 +72,6 @@ export class GradeSubmissionComponent {
       });
     }
   }
-
-  // The API returns ProblemDetails ({ detail: "..." }) for every rejection
-  // case (wrong instructor, student not registered, invalid score, etc).
-  // Fall back to the generic HTTP message only if that's missing.
   private extractErrorMessage(err: unknown): string {
     if (err instanceof HttpErrorResponse) {
       const detail = err.error?.detail;
@@ -90,7 +79,6 @@ export class GradeSubmissionComponent {
         return detail;
       }
     }
-
     return `Submission failed: ${(err as { message?: string })?.message ?? 'Server error'}`;
   }
 }

@@ -1,7 +1,5 @@
 <h1>Course Detail</h1>
-
 <p>Course ID: {{ id() }}</p>
-
 @if (auth.hasRole('Admin')) {
   <div class="course-detail__actions">
     <a [routerLink]="['/admin/courses', id(), 'edit']" class="btn-edit">Edit Course</a>
@@ -15,13 +13,10 @@
     </button>
   </div>
 }
-
 @if (store.deleteStatus() === 'success') {
   <p class="delete-success">Course deleted successfully. Redirecting...</p>
 }
-
 @if (store.deleteStatus() === 'error' && store.error()) {
   <p class="delete-error">{{ store.error() }}</p>
 }
-
 <a routerLink="/dashboard">Back to Dashboard</a>

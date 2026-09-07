@@ -3,14 +3,12 @@
   flex-direction: column;
   gap: 1rem;
 }
-
 .admin-course-list__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
 }
-
 .admin-course-list__new-btn {
   padding: 0.5rem 1rem;
   border-radius: 6px;
@@ -19,13 +17,11 @@
   text-decoration: none;
   font-weight: 600;
 }
-
 .admin-course-list__grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1rem;
 }
-
 .admin-course-list__empty {
   color: var(--mat-sys-on-surface-variant);
 }

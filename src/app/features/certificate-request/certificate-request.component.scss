@@ -3,20 +3,17 @@
   flex-direction: column;
   gap: 0.6rem;
 }
-
 .certificate-request label {
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--mat-sys-on-surface-variant);
 }
-
 .certificate-request input {
   padding: 0.55rem 0.7rem;
   border: 1px solid var(--mat-sys-outline);
   border-radius: 8px;
   font-size: 0.9rem;
 }
-
 .certificate-request button {
   display: inline-flex;
   align-items: center;
@@ -31,13 +28,11 @@
   font-weight: 600;
   font-size: 0.85rem;
 }
-
 .certificate-request button:disabled {
   background: var(--mat-sys-surface-container-high);
   color: var(--mat-sys-on-surface-variant);
   cursor: not-allowed;
 }
-
 .hint {
   display: flex;
   align-items: flex-start;
@@ -45,7 +40,6 @@
   font-size: 0.78rem;
   color: var(--mat-sys-on-surface-variant);
 }
-
 .success {
   display: flex;
   align-items: center;
@@ -54,7 +48,6 @@
   font-weight: 600;
   font-size: 0.85rem;
 }
-
 .error {
   display: flex;
   align-items: center;

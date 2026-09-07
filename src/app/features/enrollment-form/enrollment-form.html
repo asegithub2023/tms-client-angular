@@ -7,7 +7,6 @@
         <p>Pick a course below and confirm to submit your enrollment request.</p>
       </div>
     </div>
-
     @if (submitted()) {
       <div class="enroll-success">
         <i class="bi bi-check-circle-fill"></i>
@@ -21,7 +20,6 @@
       <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="field">
           <label for="courseCode"><i class="bi bi-book"></i> Course</label>
-
           @if (coursesResource.isLoading()) {
             <p class="hint"><i class="bi bi-arrow-repeat spin"></i> Loading courses...</p>
           } @else if (coursesResource.error()) {
@@ -37,16 +35,13 @@
               }
             </select>
           }
-
           @if (form.controls.courseCode.touched && form.controls.courseCode.invalid) {
             <p class="error"><i class="bi bi-exclamation-circle"></i> Select a course to enroll in.</p>
           }
         </div>
-
         @if (errorMessage()) {
           <p class="error error--server"><i class="bi bi-exclamation-triangle"></i> {{ errorMessage() }}</p>
         }
-
         <button type="submit" class="btn btn--primary" [disabled]="isSubmitting()">
           <i class="bi" [class.bi-hourglass-split]="isSubmitting()" [class.bi-check2-circle]="!isSubmitting()"></i>
           {{ isSubmitting() ? 'Submitting...' : 'Confirm Enrollment' }}

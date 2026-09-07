@@ -2,43 +2,36 @@ import { PLATFORM_ID, inject, Injectable, signal } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { isPlatformBrowser } from '@angular/common';
 import { Subject } from 'rxjs';
-
 export interface EnrollmentStatusEvent {
   id: number;
   status: 'Pending' | 'Approved' | 'Rejected';
 }
-
 @Injectable({ providedIn: 'root' })
 export class LiveSyncService {
   private platformId = inject(PLATFORM_ID);
   private connection: HubConnection | null = null;
   private eventsSubject = new Subject<EnrollmentStatusEvent>();
-
   events$ = this.eventsSubject.asObservable();
   connectionState = signal<'connected' | 'reconnecting' | 'disconnected'>('disconnected');
-
   connect() {
+    // Keep one shared connection for all consumers of enrollment updates.
     if (this.connection) {
       return;
     }
-
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
-
+    // SignalR is browser-only and reconnects automatically after transient failures.
     this.connection = new HubConnectionBuilder()
       .withUrl('/hubs/tms')
       .withAutomaticReconnect([0, 2000, 10000, 30000])
       .build();
-
     this.connection.on('ReceiveEnrollmentStatusUpdated', (enrollmentId: string, status: 'Pending' | 'Approved' | 'Rejected') => {
       this.eventsSubject.next({ id: Number(enrollmentId), status });
     });
-
     this.connection.onreconnecting(() => this.connectionState.set('reconnecting'));
     this.connection.onreconnected(() => this.connectionState.set('connected'));
     this.connection.onclose(() => this.connectionState.set('disconnected'));
-
     this.connection
       .start()
       .then(() => this.connectionState.set('connected'))

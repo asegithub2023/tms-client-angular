@@ -1,5 +1,4 @@
 <div class="dashboard">
-  <!-- Hero -->
   <section class="hero">
     <div class="hero__avatar">
       <i class="bi bi-mortarboard-fill"></i>
@@ -9,8 +8,6 @@
       <p>Here's what's happening with your studies today.</p>
     </div>
   </section>
-
-  <!-- Stat cards -->
   <section class="stats">
     <div class="stat-card stat-card--credits">
       <i class="bi bi-award-fill"></i>
@@ -19,7 +16,6 @@
         <span class="stat-card__label">Credits Earned</span>
       </div>
     </div>
-
     <div class="stat-card stat-card--status">
       <i class="bi bi-flag-fill"></i>
       <div>
@@ -27,7 +23,6 @@
         <span class="stat-card__label">Graduation Status</span>
       </div>
     </div>
-
     <div class="stat-card stat-card--pending">
       <i class="bi bi-hourglass-split"></i>
       <div>
@@ -36,7 +31,6 @@
       </div>
     </div>
   </section>
-
   <div class="actions">
     <a routerLink="/enroll" class="btn btn--primary">
       <i class="bi bi-plus-circle"></i> Enroll in a Course
@@ -45,14 +39,10 @@
       <i class="bi bi-lightning-charge"></i> Register for a Class (+3 credits)
     </button>
   </div>
-
-  <!-- My Enrollments -->
   <section class="panel">
     <h2><i class="bi bi-journal-check"></i> My Enrollments</h2>
     <app-my-enrollments></app-my-enrollments>
   </section>
-
-  <!-- Documents -->
   <section class="panel">
     <h2><i class="bi bi-file-earmark-text"></i> Documents</h2>
     <div class="panel__grid">
@@ -66,15 +56,11 @@
       </div>
     </div>
   </section>
-
-  <!-- Course catalog -->
   <section class="panel">
     <h2><i class="bi bi-book"></i> Course Catalog</h2>
-
     @if (enrollMessage()) {
       <p class="enroll-message"><i class="bi bi-info-circle"></i> {{ enrollMessage() }}</p>
     }
-
     @if (coursesResource.isLoading()) {
       <p class="hint"><i class="bi bi-arrow-repeat spin"></i> Fetching courses from the server...</p>
     } @else if (coursesResource.error()) {
@@ -92,7 +78,6 @@
         }
       </div>
     }
-
     @if (selectedCourse(); as picked) {
       <p class="selection-hint">
         <i class="bi bi-check2-circle"></i>

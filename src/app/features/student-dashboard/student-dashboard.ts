@@ -9,7 +9,6 @@ import { AuthService } from "../../services/auth.service";
 import { MyEnrollmentsComponent } from "../my-enrollments/my-enrollments.component";
 import { CertificateRequestComponent } from "../certificate-request/certificate-request.component";
 import { TranscriptRequestComponent } from "../transcript-request/transcript-request.component";
-
 @Component({
   selector: "app-student-dashboard",
   standalone: true,
@@ -27,48 +26,36 @@ export class StudentDashboardComponent {
   private api = inject(CourseService);
   private enrollmentApi = inject(EnrollmentService);
   private auth = inject(AuthService);
-
   private myEnrollments = viewChild(MyEnrollmentsComponent);
-
   studentName = computed(() => this.auth.currentUser()?.displayName ?? "Student");
   private studentId = computed(() => this.auth.currentUser()?.studentId ?? null);
-
   earnedCredits = signal(45);
-
   graduationStatus = computed(() =>
     this.earnedCredits() >= 120 ? "Eligible for Graduation" : "In Progress"
   );
-
   pendingCount = computed(
     () => this.myEnrollments()?.enrollments().filter((e) => e.status === 'Pending').length ?? 0
   );
-
   selectedCourse = signal<Course | null>(null);
   enrollingCourseId = signal<number | null>(null);
   enrollMessage = signal<string | null>(null);
-
   coursesResource = rxResource({
     stream: () => this.api.getAll(),
   });
-
   registerForClass() {
     this.earnedCredits.update((c) => c + 3);
   }
-
   handleEnroll(course: Course) {
     const studentId = this.studentId();
-
     if (studentId === null) {
       this.enrollMessage.set(
         "Your account isn't linked to a student record. Log in with a Student account to enroll."
       );
       return;
     }
-
     this.selectedCourse.set(course);
     this.enrollingCourseId.set(course.id);
     this.enrollMessage.set(null);
-
     this.enrollmentApi
       .create({ studentId, courseCode: course.code })
       .subscribe({

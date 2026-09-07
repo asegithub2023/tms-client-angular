@@ -1,12 +1,10 @@
 <div class="auth-page">
-  <!-- Form Side -->
   <div class="auth-form-container">
     <form class="auth-card" [formGroup]="form" (ngSubmit)="submit()">
       <div class="form-header">
         <h1 class="form-title">Welcome Back</h1>
         <p class="form-subtitle">Sign in to your account</p>
       </div>
-
       <div class="field">
         <label for="email">
           <i class="bi bi-envelope"></i> Email
@@ -17,7 +15,6 @@
         <p class="error"><i class="bi bi-exclamation-circle"></i> Enter a valid email address.</p>
         }
       </div>
-
       <div class="field">
         <label for="password">
           <i class="bi bi-lock"></i> Password
@@ -28,14 +25,12 @@
         <p class="error"><i class="bi bi-exclamation-circle"></i> Password is required.</p>
         }
       </div>
-
       @if (errorMessage()) {
       <div class="error-alert">
         <i class="bi bi-exclamation-triangle"></i>
         <p>{{ errorMessage() }}</p>
       </div>
       }
-
       <button type="submit" [disabled]="isSubmitting()" class="btn-submit">
         @if (isSubmitting()) {
         <span class="spinner-small"></span>
@@ -44,7 +39,6 @@
         <i class="bi bi-box-arrow-in-right"></i> Sign In
         }
       </button>
-
       <p class="switch-link">
         Don't have an account? <a routerLink="/register" class="link-switch">Create one now</a>
       </p>

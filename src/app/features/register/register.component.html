@@ -1,12 +1,10 @@
 <div class="auth-page">
-  <!-- Form Side -->
   <div class="auth-form-container">
     <form class="auth-card" [formGroup]="form" (ngSubmit)="submit()">
       <div class="form-header">
         <h1 class="form-title">Create Account</h1>
         <p class="form-subtitle">Join us today</p>
       </div>
-
       <div class="field">
         <label for="fullName">
           <i class="bi bi-person"></i> Full Name
@@ -16,7 +14,6 @@
         <p class="error"><i class="bi bi-exclamation-circle"></i> Full name is required.</p>
         }
       </div>
-
       <div class="field">
         <label for="email">
           <i class="bi bi-envelope"></i> Email
@@ -27,7 +24,6 @@
         <p class="error"><i class="bi bi-exclamation-circle"></i> Enter a valid email address.</p>
         }
       </div>
-
       <div class="field">
         <label for="password">
           <i class="bi bi-lock"></i> Password
@@ -39,7 +35,6 @@
           and a symbol.</p>
         }
       </div>
-
       <div class="field">
         <label for="role">
           <i class="bi bi-briefcase"></i> Role
@@ -48,21 +43,18 @@
           <option value="Student">Student</option>
         </select>
       </div>
-
       @if (errorMessage()) {
       <div class="error-alert">
         <i class="bi bi-exclamation-triangle"></i>
         <p>{{ errorMessage() }}</p>
       </div>
       }
-
       @if (successMessage()) {
       <div class="success-alert">
         <i class="bi bi-check-circle"></i>
         <p>{{ successMessage() }}</p>
       </div>
       }
-
       <button type="submit" [disabled]="isSubmitting()" class="btn-submit">
         @if (isSubmitting()) {
         <span class="spinner-small"></span>
@@ -71,7 +63,6 @@
         <i class="bi bi-person-plus"></i> Register
         }
       </button>
-
       <p class="switch-link">
         Already have an account? <a routerLink="/login" class="link-switch">Sign in here</a>
       </p>

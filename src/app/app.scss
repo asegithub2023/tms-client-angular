@@ -7,21 +7,18 @@
   border-bottom: 1px solid var(--mat-sys-outline-variant);
   flex-wrap: wrap;
 }
-
 .app-header__brand a {
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--mat-sys-primary);
   text-decoration: none;
 }
-
 .app-header__nav {
   display: flex;
   gap: 1rem;
   flex: 1;
   flex-wrap: wrap;
 }
-
 .app-header__nav a {
   color: var(--mat-sys-on-surface);
   text-decoration: none;
@@ -29,29 +26,24 @@
   border-radius: 6px;
   font-size: 0.9rem;
 }
-
 .app-header__nav a:hover {
   background: var(--mat-sys-surface-container-high);
 }
-
 .app-header__nav a.active {
   color: var(--mat-sys-primary);
   font-weight: 600;
   background: var(--mat-sys-primary-container);
 }
-
 .app-header__account {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   font-size: 0.9rem;
 }
-
 .app-header__account a {
   color: var(--mat-sys-primary);
   text-decoration: none;
 }
-
 .app-header__account button {
   padding: 0.35rem 0.75rem;
   cursor: pointer;
@@ -59,7 +51,6 @@
   background: transparent;
   border-radius: 6px;
 }
-
 .app-main {
   padding: 1.5rem;
   max-width: 1100px;

@@ -8,29 +8,24 @@
   border: 1px solid var(--mat-sys-outline-variant);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-
 .course-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.3);
 }
-
 .course-card--full {
   opacity: 0.75;
 }
-
 .course-card__top {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-
 .course-card__code {
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.03em;
   color: var(--mat-sys-on-surface-variant);
 }
-
 .course-card__badge {
   display: inline-flex;
   align-items: center;
@@ -42,46 +37,38 @@
   background: #e8f5e9;
   color: #2e7d32;
 }
-
 .course-card__badge--full {
   background: #ffebee;
   color: #c62828;
 }
-
 .course-card h3 {
   margin: 0;
   font-size: 1rem;
   line-height: 1.3;
 }
-
 .course-card h3 a {
   color: var(--mat-sys-on-surface);
   text-decoration: none;
 }
-
 .course-card h3 a:hover {
   color: var(--mat-sys-primary);
 }
-
 .course-card__seats {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
 }
-
 .course-card__seats-bar {
   height: 6px;
   border-radius: 999px;
   background: var(--mat-sys-surface-container-high);
   overflow: hidden;
 }
-
 .course-card__seats-fill {
   height: 100%;
   background: var(--mat-sys-primary);
   border-radius: 999px;
 }
-
 .course-card__seats span {
   display: flex;
   align-items: center;
@@ -89,7 +76,6 @@
   font-size: 0.8rem;
   color: var(--mat-sys-on-surface-variant);
 }
-
 .course-card__owned {
   display: flex;
   align-items: center;
@@ -99,14 +85,12 @@
   font-weight: 600;
   color: var(--mat-sys-primary);
 }
-
 .course-card__actions {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   margin-top: 0.25rem;
 }
-
 .course-card__actions button {
   display: inline-flex;
   align-items: center;
@@ -120,13 +104,11 @@
   font-weight: 600;
   font-size: 0.85rem;
 }
-
 .course-card__actions button:disabled {
   background: var(--mat-sys-surface-container-high);
   color: var(--mat-sys-on-surface-variant);
   cursor: not-allowed;
 }
-
 .course-card__edit-link {
   display: inline-flex;
   align-items: center;
@@ -135,7 +117,6 @@
   color: var(--mat-sys-primary);
   text-decoration: none;
 }
-
 .course-card__delete-btn {
   display: inline-flex;
   align-items: center;
@@ -149,16 +130,13 @@
   font-weight: 600;
   font-size: 0.85rem;
   transition: all 0.2s ease;
-
   &:hover {
     background: #ef5350;
     color: white;
   }
-
   &:active {
     transform: scale(0.98);
   }
-
   i {
     font-size: 16px;
   }

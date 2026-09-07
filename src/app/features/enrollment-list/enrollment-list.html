@@ -1,6 +1,5 @@
 <div class="enrollment-container">
   <div class="container-fluid py-5">
-    <!-- Header Section -->
     <div class="page-header mb-5">
       <div class="d-flex align-items-center gap-3 mb-2">
         <div class="icon-box">
@@ -12,8 +11,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Stats Cards -->
     <div class="row mb-4">
       <div class="col-md-4 col-sm-6 mb-3">
         <div class="stat-card">
@@ -49,17 +46,13 @@
         </div>
       </div>
     </div>
-
-    <!-- Table Card -->
     <div class="table-card">
       <div class="table-header">
         <h5 class="mb-0">All Enrollments</h5>
         <span class="badge bg-primary">{{ dataSource.data.length }} Total</span>
       </div>
-
       <div class="table-responsive">
         <table mat-table [dataSource]="dataSource" matSort class="enrollment-table">
-          <!-- Student Name Column -->
           <ng-container matColumnDef="studentName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               <i class="bi bi-person me-2"></i>Student Name
@@ -73,8 +66,6 @@
               </div>
             </td>
           </ng-container>
-
-          <!-- Course Name Column -->
           <ng-container matColumnDef="courseName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               <i class="bi bi-book me-2"></i>Course Name
@@ -83,8 +74,6 @@
               {{ row.courseName }}
             </td>
           </ng-container>
-
-          <!-- Status Column -->
           <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               <i class="bi bi-flag me-2"></i>Status
@@ -96,8 +85,6 @@
               </span>
             </td>
           </ng-container>
-
-          <!-- Actions Column -->
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>
               <i class="bi bi-gear me-2"></i>Actions
@@ -119,13 +106,10 @@
               }
             </td>
           </ng-container>
-
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
       </div>
-
-      <!-- Paginator -->
       <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 50]" [pageSize]="10" showFirstLastButtons>
       </mat-paginator>
     </div>

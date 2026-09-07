@@ -2,7 +2,6 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EnrollmentService } from '../../services/enrollment';
 import { Enrollment } from '../../models/enrollment.model';
-
 @Component({
   selector: 'app-my-enrollments',
   standalone: true,
@@ -12,19 +11,15 @@ import { Enrollment } from '../../models/enrollment.model';
 })
 export class MyEnrollmentsComponent implements OnInit {
   private api = inject(EnrollmentService);
-
   enrollments = signal<Enrollment[]>([]);
   isLoading = signal(true);
   error = signal<string | null>(null);
-
   ngOnInit(): void {
     this.reload();
   }
-
   reload(): void {
     this.isLoading.set(true);
     this.error.set(null);
-
     this.api.getMine().subscribe({
       next: (rows) => {
         this.enrollments.set(rows);

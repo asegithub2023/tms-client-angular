@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -15,11 +14,9 @@ export class RegisterComponent {
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
   private router = inject(Router);
-
   isSubmitting = signal(false);
   errorMessage = signal<string | null>(null);
   successMessage = signal<string | null>(null);
-
   form = this.fb.nonNullable.group({
     fullName: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
@@ -30,22 +27,18 @@ export class RegisterComponent {
     ]],
     role: ['Student', Validators.required],
   });
-
   async submit(): Promise<void> {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
-
     this.isSubmitting.set(true);
     this.errorMessage.set(null);
     this.successMessage.set(null);
-
     try {
       const formValue = this.form.getRawValue();
       const [firstName, ...lastNameParts] = formValue.fullName.trim().split(' ');
       const lastName = lastNameParts.join(' ') || firstName;
-
       const registerData = {
         firstName,
         lastName,
@@ -53,7 +46,6 @@ export class RegisterComponent {
         password: formValue.password,
         role: formValue.role,
       };
-
       const result = await this.auth.register(registerData);
       this.successMessage.set(result.message ?? 'Registration successful.');
       setTimeout(() => this.router.navigateByUrl('/login'), 1500);

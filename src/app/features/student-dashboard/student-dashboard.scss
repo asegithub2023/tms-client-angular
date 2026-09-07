@@ -4,7 +4,6 @@
   margin: 0 auto;
   padding-bottom: 2rem;
 }
-
 .hero {
   display: flex;
   align-items: center;
@@ -16,7 +15,6 @@
   color: #fff;
   box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.35);
 }
-
 .hero__avatar {
   width: 64px;
   height: 64px;
@@ -28,24 +26,20 @@
   font-size: 1.75rem;
   flex-shrink: 0;
 }
-
 .hero__text h1 {
   margin: 0 0 0.25rem;
   font-size: 1.5rem;
 }
-
 .hero__text p {
   margin: 0;
   opacity: 0.9;
 }
-
 .stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
-
 .stat-card {
   display: flex;
   align-items: center;
@@ -56,12 +50,10 @@
   border: 1px solid var(--mat-sys-outline-variant);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-
 .stat-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.25);
 }
-
 .stat-card i {
   font-size: 1.75rem;
   width: 48px;
@@ -72,30 +64,25 @@
   justify-content: center;
   flex-shrink: 0;
 }
-
 .stat-card--credits i { background: #e3f2fd; color: #1565c0; }
 .stat-card--status i { background: #e8f5e9; color: #2e7d32; }
 .stat-card--pending i { background: #fff3e0; color: #ef6c00; }
-
 .stat-card__value {
   display: block;
   font-size: 1.25rem;
   font-weight: 700;
 }
-
 .stat-card__label {
   display: block;
   font-size: 0.8rem;
   color: var(--mat-sys-on-surface-variant);
 }
-
 .actions {
   display: flex;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
 }
-
 .btn {
   display: inline-flex;
   align-items: center;
@@ -109,20 +96,16 @@
   cursor: pointer;
   transition: opacity 0.15s ease;
 }
-
 .btn:hover { opacity: 0.9; }
-
 .btn--primary {
   background: var(--mat-sys-primary);
   color: var(--mat-sys-on-primary);
 }
-
 .btn--ghost {
   background: transparent;
   color: var(--mat-sys-primary);
   border: 1px solid var(--mat-sys-primary);
 }
-
 .panel {
   padding: 1.5rem;
   margin-bottom: 1.5rem;
@@ -130,7 +113,6 @@
   background: var(--mat-sys-surface-container-low);
   border: 1px solid var(--mat-sys-outline-variant);
 }
-
 .panel h2 {
   display: flex;
   align-items: center;
@@ -138,20 +120,17 @@
   margin: 0 0 1rem;
   font-size: 1.1rem;
 }
-
 .panel__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.25rem;
 }
-
 .doc-card {
   padding: 1.1rem;
   border-radius: 12px;
   background: var(--mat-sys-surface);
   border: 1px solid var(--mat-sys-outline-variant);
 }
-
 .doc-card h3 {
   display: flex;
   align-items: center;
@@ -159,25 +138,20 @@
   margin: 0 0 0.75rem;
   font-size: 0.95rem;
 }
-
 .course-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1rem;
 }
-
 .hint {
   color: var(--mat-sys-on-surface-variant);
   display: flex;
   align-items: center;
   gap: 0.4rem;
 }
-
 .hint--error { color: #c62828; }
-
 .spin { animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-
 .selection-hint {
   display: flex;
   align-items: center;
@@ -188,7 +162,6 @@
   background: var(--mat-sys-secondary-container);
   color: var(--mat-sys-on-secondary-container);
 }
-
 .enroll-message {
   display: flex;
   align-items: center;

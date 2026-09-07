@@ -6,15 +6,12 @@ import {
   patchState,
   withState,
 } from '@ngrx/signals';
-
 import {
   withEntities,
   setAllEntities,
   updateEntity,
 } from '@ngrx/signals/entities';
-
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-
 import {
   pipe,
   concatMap,
@@ -22,27 +19,22 @@ import {
   catchError,
   EMPTY,
 } from 'rxjs';
-
 import { EnrollmentService } from '../services/enrollment';
 import { LiveSyncService } from '../services/live-sync.service';
 import { Enrollment } from '../models/enrollment.model';
-
 export const EnrollmentStore = signalStore(
   { providedIn: 'root' },
-
   withState({
     isLoading: false,
     error: null as string | null,
   }),
-
   withEntities<Enrollment>(),
-
   withComputed((store) => ({
+    // Keep dashboard counts derived from the entity collection.
     pendingCount: computed(
       () => store.entities().filter((e) => e.status === 'Pending').length
     ),
   })),
-
   withMethods((store, api = inject(EnrollmentService), sync = inject(LiveSyncService)) => ({
     loadEnrollments: rxMethod<void>(
       pipe(
@@ -70,9 +62,9 @@ export const EnrollmentStore = signalStore(
         )
       )
     ),
-
     approveEnrollment: rxMethod<number>(
       pipe(
+        // Optimistically update the UI and restore Pending if the API rejects it.
         tap((id) => {
           patchState(
             store,
@@ -105,7 +97,6 @@ export const EnrollmentStore = signalStore(
         )
       )
     ),
-
     rejectEnrollment: rxMethod<number>(
       pipe(
         tap((id) => {
@@ -140,9 +131,9 @@ export const EnrollmentStore = signalStore(
         )
       )
     ),
-
     listenForLiveUpdates: rxMethod<void>(
       pipe(
+        // Server-pushed status changes keep instructor views synchronized.
         tap(() => sync.connect()),
         concatMap(() => sync.events$),
         tap((event) => {

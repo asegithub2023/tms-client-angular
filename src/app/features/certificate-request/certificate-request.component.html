@@ -6,12 +6,10 @@
     (input)="updateCourseCode($any($event.target).value)"
     placeholder="CSE-101"
   />
-
   <button type="button" (click)="request()" [disabled]="isRequesting()">
     <i class="bi" [class.bi-hourglass-split]="isRequesting()" [class.bi-patch-check]="!isRequesting()"></i>
     {{ isRequesting() ? 'Requesting...' : 'Request Certificate' }}
   </button>
-
   @if (isRequesting()) {
     <p class="hint">
       <i class="bi bi-info-circle"></i>
@@ -19,11 +17,9 @@
       unreliable in this environment (used to demonstrate retry/circuit-breaker behavior).
     </p>
   }
-
   @if (resultMessage()) {
     <p class="success"><i class="bi bi-check-circle-fill"></i> {{ resultMessage() }}</p>
   }
-
   @if (errorMessage()) {
     <p class="error"><i class="bi bi-exclamation-triangle"></i> {{ errorMessage() }}</p>
   }

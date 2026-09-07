@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -15,24 +14,19 @@ export class LoginComponent {
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
   private router = inject(Router);
-
   isSubmitting = signal(false);
   errorMessage = signal<string | null>(null);
-
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
   });
-
   async submit(): Promise<void> {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
-
     this.isSubmitting.set(true);
     this.errorMessage.set(null);
-
     try {
       await this.auth.login(this.form.getRawValue());
       this.router.navigateByUrl('/dashboard');

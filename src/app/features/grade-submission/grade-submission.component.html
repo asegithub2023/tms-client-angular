@@ -2,7 +2,6 @@
   <div class="container-fluid py-5">
     <div class="row justify-content-center">
       <div class="col-lg-6 col-md-8">
-        <!-- Header Section -->
         <div class="page-header mb-4">
           <div class="d-flex align-items-center gap-3">
             <div class="icon-box">
@@ -14,11 +13,8 @@
             </div>
           </div>
         </div>
-
-        <!-- Main Card -->
         <mat-card class="grade-card">
           <form [formGroup]="gradeForm" (ngSubmit)="onSubmit()">
-            <!-- Student ID Field -->
             <div class="mb-4">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>
@@ -33,8 +29,6 @@
                 </mat-error>
               </mat-form-field>
             </div>
-
-            <!-- Course ID Field -->
             <div class="mb-4">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>
@@ -49,8 +43,6 @@
                 </mat-error>
               </mat-form-field>
             </div>
-
-            <!-- Score Field -->
             <div class="mb-4">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>
@@ -65,16 +57,12 @@
                 </mat-error>
               </mat-form-field>
             </div>
-
-            <!-- Loading Spinner -->
             <div *ngIf="isSubmitting" class="spinner-container mb-4">
               <div class="spinner-border spinner-border-sm" role="status">
                 <span class="visually-hidden">Submitting...</span>
               </div>
               <span class="ms-2">Submitting grade...</span>
             </div>
-
-                       <!-- Status Message -->
             <div
               *ngIf="submissionStatus"
               class="alert alert-dismissible fade show mb-4"
@@ -86,8 +74,6 @@
               {{ submissionStatus }}
               <button type="button" class="btn-close" (click)="submissionStatus = ''"></button>
             </div>
-
-            <!-- Submit Button -->
             <button mat-raised-button color="primary" type="submit" [disabled]="gradeForm.invalid || isSubmitting"
               class="w-100 submit-btn">
               <i class="bi bi-check-lg me-2"></i>
@@ -95,8 +81,6 @@
             </button>
           </form>
         </mat-card>
-
-        <!-- Info Box -->
         <div class="info-box mt-4">
           <i class="bi bi-info-circle"></i>
           <span>All fields are required. Score must be between 0 and 100.</span>
